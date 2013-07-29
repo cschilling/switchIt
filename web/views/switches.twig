@@ -2,86 +2,35 @@
 
 {% block body %}
 
-<legend>Wohnzimmer</legend>
+	{% for gKey, group in app.data.groups %}
 
-	<table class="table table-striped">
-	<!-- Edit -->
-	<tr>
-		<td style="width: 70px;">
-			<a href="{{ path('edit-switch', {'id': 1}) }}">
-				<button type="button" class="btn btn-primary text-right" style="float: right;">
-					<span class="glyphicon glyphicon-pencil" style="margin-right: 10px;"></span>{{ app.i18n.labels.edit }}
-				</button>
-			</a>
-		</td>
-		<td>
-			<span style="font-size: 14pt;">Stehlampe</span>
-		</td>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-danger text-right" style="float: right;">
-				<span class="glyphicon glyphicon-remove-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.delete }}
-			</button>
-		</td>
-	</tr>
-	<tr>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-primary text-right" style="float: right;">
-				<span class="glyphicon glyphicon-pencil" style="margin-right: 10px;"></span>{{ app.i18n.labels.edit }}
-			</button>
-		</td>
-		<td>
-			<span style="font-size: 14pt;">Stehlampe 2</span>
-		</td>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-danger text-right" style="float: right;">
-				<span class="glyphicon glyphicon-remove-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.delete }}
-			</button>
-		</td>
-	</tr>
-	<!-- /Edit -->
+		<legend>{{ group }}</legend>
 
-	<!-- Add -->
-	<tr>
-		<td colspan="3">
-			<button type="button" class="btn btn-primary text-right" style="float: right;">
-				<span class="glyphicon glyphicon-plus-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.add }}
-			</button>
-		</td>
-	</tr>
-	<!-- /Add -->
-	</table>
+		<table class="table table-striped">
 
-	
-<legend>Balkon</legend>
+			{% for key, switch in app.data.switches|sort if switch.group == gKey %}
+			
+			<tr>
+				<td style="width: 70px;">
+					<a href="{{ path('edit-switch', {'id': key}) }}" class="btn btn-primary text-right" style="float: right;">
+						<span class="glyphicon glyphicon-pencil" style="margin-right: 10px;"></span>{{ app.i18n.labels.edit }}
+					</a>
+				</td>
+				<td>
+					<span style="font-size: 14pt;">{{ switch.name }}</span>
+				</td>
+				<td style="width: 70px;">
+				
+					<a onclick="alert('Delete switch #{{ key }}')" class="btn btn-danger text-right" style="float: right;">
+						<span class="glyphicon glyphicon-remove-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.delete }}
+					</a>
+				</td>
+			</tr>
 
-	<table class="table table-striped">
-	<!-- Edit -->
-	<tr>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-primary text-right" style="float: right;">
-				<span class="glyphicon glyphicon-pencil" style="margin-right: 10px;"></span>{{ app.i18n.labels.edit }}
-			</button>
-		</td>
-		<td>
-			<span style="font-size: 14pt;">Brunnen</span>
-		</td>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-danger text-right" style="float: right;">
-				<span class="glyphicon glyphicon-remove-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.delete }}
-			</button>
-		</td>
-	</tr>
-	<!-- /Edit -->
+			{% endfor %}
+		
+		</table>
+		
+	{% endfor %}
 
-	<!-- Add -->
-	<tr>
-		<td colspan="3">
-			<button type="button" class="btn btn-primary text-right" style="float: right;">
-				<span class="glyphicon glyphicon-plus-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.add }}
-			</button>
-		</td>
-	</tr>
-	<!-- /Add -->
-	</table>
-	
 {% endblock %}

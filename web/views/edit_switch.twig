@@ -2,7 +2,9 @@
 
 {% block body %}
 
-<legend>Schalter</legend>
+	{% set switch = app.data.switches[id] %}
+
+	<legend>Schalter</legend>
 
 	<table class="table table-striped">
 	<tr>
@@ -10,25 +12,28 @@
 			<label for="name">Name</label>
 		</td>
 		<td>
-			<input type="text" name="name" value="Stehlampe" id="name" />
+			<input type="text" name="name" value="{{ switch.name }}" id="name" class="form-control" />
 		</td>
 	</tr>
-	
+
 	<tr>
 		<td style="width: 70px;">
 			<label for="group">Group</label>
 		</td>
 		<td>
-			<select name="group" id="group">
-				<option value="1">Wohnzimmer</option>
-				<option value="2">Balkon</option>
+			<select name="group" id="group" class="form-control">
+
+				{% for key,group in app.data.groups %}
+					<option value="{{ key }}"{% if key == switch.group %}selected{% endif %}>{{ group }}</option>
+				{% endfor %}
+
 			</select>
 		</td>
 	</tr>
 	</table>
 
-	
-<legend>{{ app.i18n.labels.dip }}</legend>
+
+	<legend>{{ app.i18n.labels.dip }}</legend>
 
 	<table class="table table-striped">
 	
@@ -38,13 +43,13 @@
 	<tr>
 		<td>
 			<div class="switch" data-on="success" data-on-label="{{ i }}" data-off="danger" data-off-label="{{ i }}">
-				<input type="checkbox" name="check_{{ i }}" checked />
+				<input type="checkbox" name="check_{{ i }}" {% if switch.config|slice(i -1, 1) == 1 %}checked{% endif %} />
 			</div>
 		</td>
 		<td style="width: 40px;"></td>
 		<td>
 			<div class="switch" data-on="success" data-on-label="{{ attribute(aAlpha, i) }}" data-off="danger" data-off-label="{{ attribute(aAlpha, i) }}">
-				<input type="checkbox" />
+				<input type="checkbox" name="check_{{ attribute(aAlpha, i) }}" {% if switch.config|slice(i +4, 1) == 1 %}checked{% endif %} />
 			</div>
 		</td>
 	</tr>
@@ -54,9 +59,9 @@
 	
 	<a href="{{ path('edit-switch', {'id': 1}) }}">
 	
-	<input type="submit name="send" value="Speichern" class="btn btn-primary" style="float: left;">
+	<input type="submit name="send" value="Speichern" class="btn btn-primary" style="float: left; margin-left: 10px;">
 
-	<a href="{{ path('switches') }}" class="btn btn-danger" style="float: right;">
+	<a href="{{ path('switches') }}" class="btn btn-danger" style="float: right; margin-right: 10px;">
 		Zur&uuml;ck
 	</a>
 
