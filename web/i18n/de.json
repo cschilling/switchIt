@@ -1,4 +1,6 @@
 {
+	"locale": "Deutsch",
+	
 	"labels": {
 		"on":"An",
 		"off":"Aus",
@@ -14,9 +16,11 @@
 		"name":"Name",
 		"group":"Gruppe",
 		"new_switch":"Schalter hinzuf\u00fcgen",
-		"new_group":"Gruppe erstellen"
+		"new_group":"Gruppe erstellen",
+		"all_group":"Gesamte Gruppe",
+		"language":"Sprache"
 	},
-	
+
 	"titles": {
 		"add_switch":"Neuer Schalter",
 		"edit_switch":"Schalter \u00e4ndern",
@@ -28,6 +32,7 @@
 		"home":"Startseite",
 		"switches":"Schalter \u00e4ndern",
 		"groups":"Gruppen \u00e4ndern",
+		"settings":"Einstellungen",
 		"about":"Info"
 	},
 

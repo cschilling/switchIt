@@ -1,4 +1,6 @@
 {
+	"locale": "English",
+
 	"labels": {
 		"on":"On",
 		"off":"Off",
@@ -14,9 +16,11 @@
 		"name":"Name",
 		"group":"Group",
 		"new_switch":"Add switch",
-		"new_group":"Create group"
+		"new_group":"Create group",
+		"all_group":"Whole group",
+		"language":"Language"
 	},
-	
+
 	"titles": {
 		"add_switch":"Add Switch",
 		"edit_switch":"Edit Switch",
@@ -28,6 +32,7 @@
 		"home":"Home",
 		"switches":"Edit switches",
 		"groups":"Edit groups",
+		"settings":"Settings",
 		"about":"About"
 	},
 

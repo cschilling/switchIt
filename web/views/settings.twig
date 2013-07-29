@@ -1,0 +1,33 @@
+{% extends "index.twig" %}
+
+{% block body %}
+
+	<form method="POST" action="{{ path('settings-save') }}">
+
+		<legend>{{ app.i18n.nav.settings }}</legend>
+
+		<table class="table table-striped">
+		<tr>
+			<td style="width: 70px;">
+				<label for="locale">{{ app.i18n.labels.language }}</label>
+			</td>
+			<td>
+				<select name="locale" id="locale" class="form-control">
+					{% for key, language in aLangFiles %}
+					<option value="{{ key }}"{% if key == app.data.locale %} selected{% endif %}>{{ language }}</option>
+					{% endfor %}
+				</select>
+			</td>
+		</tr>
+		</table>
+
+		
+		<input type="submit" name="send" value="{{ app.i18n.labels.save }}" class="btn btn-primary" style="float: left; margin-left: 10px;">
+
+		<a href="{{ path('groups') }}" class="btn btn-danger" style="float: right; margin-right: 10px;">
+			{{ app.i18n.labels.back }}
+		</a>
+
+	</form>
+	
+{% endblock %}

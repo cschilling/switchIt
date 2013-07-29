@@ -3,12 +3,14 @@
 {% block body %}
 
 	{% for gKey, group in app.data.aFilledGroups %}
-
+	
 		<legend>{{ group }}</legend>
 
 		<table class="table table-striped">
 
+			{% set switchCount = 0 %}
 			{% for key, switch in app.data.switches|sort if switch.group == gKey %}
+				{% set switchCount = switchCount +1 %}
 			<tr>
 				<td style="width: 70px;">
 					<a onclick="alert('{{ switch.config }} 1');" class="btn btn-success" style="float: left;">
@@ -25,6 +27,24 @@
 				</td>
 			</tr>
 			{% endfor %}
+			
+			{% if switchCount > 1 %}
+			<tr>
+				<td style="width: 70px;">
+					<a onclick="alert('Alle: {{ switchCount }}');" class="btn btn-success" style="float: left;">
+						{{ app.i18n.labels.on }}
+					</a>
+				</td>
+				<td class="text-center">
+					<span style="font-size: 14pt; font-style: italic;">{{ app.i18n.labels.all_group }}</span>
+				</td>
+				<td style="width: 40px;">
+					<a onclick="alert('Alle: {{ switchCount }}');" class="btn btn-danger" style="float: right;">
+						{{ app.i18n.labels.off }}
+					</a>
+				</td>
+			</tr>
+			{% endif %}
 		
 		</table>
 		

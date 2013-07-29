@@ -10,10 +10,12 @@ $dataFile = __DIR__.'/data.json';
 $app          = new Silex\Application();
 $app['debug'] = true;
 $app['title'] = 'RaspSwitcher v0.8';
-$app['i18n']  = json_decode(file_get_contents(__DIR__.'/i18n/de.json'), true);
 
 // load Data from file
 $app['data']  = fetchData($dataFile);
+
+// load i18n
+$app['i18n']  = json_decode(file_get_contents(__DIR__.'/i18n/'.$app['data']['locale'].'.json'), true);
 
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
@@ -35,8 +37,52 @@ $app->get('/', function() use ($app) {
 })->bind('home');
 
 $app->get('/about', function() use ($app) {
-	return $app['twig']->render('info.twig');
+	return $app['twig']->render('about.twig');
 })->bind('about');
+
+$app->get('/settings', function() use ($app) {
+
+	$dir = __DIR__.'/i18n';
+	$dh  = opendir($dir);
+	while (false !== ($filename = readdir($dh)))
+		$files[] = $filename;
+
+	sort($files);
+	
+	$aLangFiles = array();
+	
+	foreach($files AS $key => $file)
+	{
+		if (strpos($file, '.json') !== false)
+		{
+			$fContent = json_decode(file_get_contents(__DIR__.'/i18n/'.$file), true);
+
+			if (isset($fContent['locale']))
+				$aLangFiles[substr($file, 0, -5)] = $fContent['locale'];
+		}
+	}
+
+	return $app['twig']->render('settings.twig', array('aLangFiles' => $aLangFiles));
+})->bind('settings');
+
+// save new/changed switch
+$app->post('/settings/save', function (Request $request) use ($app, $dataFile) {
+
+	$language = $request->get('locale');
+
+	
+	// save settings
+	$aData = $app['data'];
+	
+	$aData['locale'] = $language;
+
+	saveData($aData, $dataFile);
+
+	$app['data'] = fetchData($dataFile);
+
+	return $app->redirect($app['url_generator']->generate('settings'));
+
+})->bind('settings-save');
 
 $app->get('/switches/edit', function() use ($app) {
 	return $app['twig']->render('switches.twig');
@@ -244,6 +290,9 @@ function fetchData($file)
 		$aData['groups'] = array();
 
 	$aData['aFilledGroups'] = getFilledGroups($aData);
+	
+	if (!isset($aData['locale']))
+		$aData['locale'] = 'en';
 
 	return $aData;
 }
