@@ -277,6 +277,13 @@ $app->post('/group/save', function (Request $request) use ($app, $dataFile) {
 
 })->bind('group-save');
 
+$app->get('/cron', function() use ($app) {
+
+	$time = date("Y, n, j, G, i, s");
+	return $app['twig']->render('cron.twig', array('time' => $time));
+})->bind('cron');
+
+
 function fetchData($file)
 {
 	if (!file_exists($file))

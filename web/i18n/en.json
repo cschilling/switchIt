@@ -18,20 +18,23 @@
 		"new_switch":"Add switch",
 		"new_group":"Create group",
 		"all_group":"Whole group",
-		"language":"Language"
+		"language":"Language",
+		"servertime":"Servertime"
 	},
 
 	"titles": {
 		"add_switch":"Add Switch",
 		"edit_switch":"Edit Switch",
 		"add_group":"Add Group",
-		"edit_group":"Edit Group"
+		"edit_group":"Edit Group",
+		"cronjobs":"Cronjobs"
 	},
 
 	"nav": {
 		"home":"Home",
 		"switches":"Edit switches",
 		"groups":"Edit groups",
+		"cron":"Cronjobs",
 		"settings":"Settings",
 		"about":"About"
 	},

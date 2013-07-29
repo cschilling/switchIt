@@ -18,20 +18,23 @@
 		"new_switch":"Schalter hinzuf\u00fcgen",
 		"new_group":"Gruppe erstellen",
 		"all_group":"Gesamte Gruppe",
-		"language":"Sprache"
+		"language":"Sprache",
+		"servertime":"Serverzeit"
 	},
 
 	"titles": {
 		"add_switch":"Neuer Schalter",
 		"edit_switch":"Schalter \u00e4ndern",
 		"add_group":"Neue Gruppe",
-		"edit_group":"Gruppe \u00e4ndern"
+		"edit_group":"Gruppe \u00e4ndern",
+		"cronjobs":"Zeitschaltungen"
 	},
 
 	"nav": {
 		"home":"Startseite",
 		"switches":"Schalter \u00e4ndern",
 		"groups":"Gruppen \u00e4ndern",
+		"cron":"Zeitschaltungen",
 		"settings":"Einstellungen",
 		"about":"Info"
 	},
