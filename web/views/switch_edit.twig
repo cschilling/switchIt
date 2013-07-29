@@ -8,7 +8,7 @@
 		{% set switch = app.data.switches[id] %}
 	{% endif %}
 
-	<form method="POST" action="{{ path('save-switch') }}">
+	<form method="POST" action="{{ path('switch-save') }}">
 		<input type="hidden" name="id" value"{{ id }}" />
 
 		<legend>{% if id == 0 %} {{ app.i18n.titles.add_switch }} {% else %} {{ app.i18n.titles.edit_switch }} {% endif %} </legend>

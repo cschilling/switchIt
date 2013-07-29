@@ -12,12 +12,15 @@
 		"back":"Back",
 		"switch":"Switch",
 		"name":"Name",
-		"group":"Group"
+		"group":"Group",
+		"new_switch":"Add switch"
 	},
 	
 	"titles": {
 		"add_switch":"Add Switch",
-		"edit_switch":"Edit Switch"
+		"edit_switch":"Edit Switch",
+		"add_group":"Add Group",
+		"edit_group":"Edit Group"
 	},
 
 	"nav": {
@@ -32,6 +35,8 @@
 	},
 
 	"errors": {
-		"no_name_given":"Name has to be at least 3 chars long"
+		"no_name_given":"Name has to be at least 3 chars long",
+		"group_not_empty":"Group cannot be deleted. There are switches that are bound to this group. Change their groupbinding first",
+		"groupname_occupied":"This groupname is already in use"
 	}
 }

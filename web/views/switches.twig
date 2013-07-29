@@ -2,7 +2,19 @@
 
 {% block body %}
 
-	{% for gKey, group in app.data.groups %}
+	<!-- Add -->
+	<tr>
+		<td colspan="3">
+			<a href="{{ path('switch-new') }}">
+				<button type="button" class="btn btn-primary text-right" style="float: right;">
+					<span class="glyphicon glyphicon-plus-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.new_switch }}
+				</button>
+			</a>
+		</td>
+	</tr>
+	<!-- /Add -->
+
+	{% for gKey, group in app.data.aFilledGroups %}
 
 		<legend>{{ group }}</legend>
 
@@ -12,7 +24,7 @@
 			
 			<tr>
 				<td style="width: 70px;">
-					<a href="{{ path('edit-switch', {'id': key}) }}" class="btn btn-primary text-right" style="float: right;">
+					<a href="{{ path('switch-edit', {'id': key}) }}" class="btn btn-primary text-right" style="float: right;">
 						<span class="glyphicon glyphicon-pencil" style="margin-right: 10px;"></span>{{ app.i18n.labels.edit }}
 					</a>
 				</td>
@@ -29,18 +41,6 @@
 
 			{% endfor %}
 			
-		<!-- Add -->
-		<tr>
-			<td colspan="3">
-				<a href="{{ path('new-switch') }}">
-					<button type="button" class="btn btn-primary text-right" style="float: right;">
-						<span class="glyphicon glyphicon-plus-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.add }}
-					</button>
-				</a>
-			</td>
-		</tr>
-		<!-- /Add -->
-		
 		</table>
 		
 	{% endfor %}

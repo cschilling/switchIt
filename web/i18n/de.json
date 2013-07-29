@@ -12,12 +12,15 @@
 		"back":"Zur\u00fcck",
 		"switch":"Schalter",
 		"name":"Name",
-		"group":"Gruppe"
+		"group":"Gruppe",
+		"new_switch":"Schalter hinzuf\u00fcgen"
 	},
 	
 	"titles": {
 		"add_switch":"Neuer Schalter",
-		"edit_switch":"Schalter \u00e4ndern"
+		"edit_switch":"Schalter \u00e4ndern",
+		"add_group":"Neue Gruppe",
+		"edit_group":"Gruppe \u00e4ndern"
 	},
 
 	"nav": {
@@ -32,6 +35,8 @@
 	},
 
 	"errors": {
-		"no_name_given":"Der Name muss min. 3 Zeichen lang sein"
+		"no_name_given":"Der Name muss min. 3 Zeichen lang sein",
+		"group_not_empty":"Gruppe kann nicht gel\u00f6scht werden. Der Gruppe sind noch Schalter zugeordnet. Sie m\u00fcssen diesen Schaltern zuerst eine andere Gruppe zuweisen",
+		"groupname_occupied":"Dieser Gruppenname existiert bereits"
 	}
 }

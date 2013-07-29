@@ -6,44 +6,31 @@
 
 	<table class="table table-striped">
 	<!-- Edit -->
-	<tr>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-primary text-right" style="float: right;">
-				<span class="glyphicon glyphicon-pencil" style="margin-right: 10px;"></span>{{ app.i18n.labels.edit }}
-			</button>
-		</td>
-		<td>
-			<span style="font-size: 14pt;">Wohnzimmer</span>
-		</td>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-danger text-right" style="float: right;">
-				<span class="glyphicon glyphicon-remove-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.delete }}
-			</button>
-		</td>
-	</tr>
-	<tr>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-primary text-right" style="float: right;">
-				<span class="glyphicon glyphicon-pencil" style="margin-right: 10px;"></span>{{ app.i18n.labels.edit }}
-			</button>
-		</td>
-		<td>
-			<span style="font-size: 14pt;">Balkon</span>
-		</td>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-danger text-right" style="float: right;">
-				<span class="glyphicon glyphicon-remove-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.delete }}
-			</button>
-		</td>
-	</tr>
-	<!-- /Edit -->
+
+	{% for key, group in app.data.groups %}
+		<tr>
+			<td style="width: 70px;">
+				<a href="{{ path('group-edit', {'id': key}) }}" class="btn btn-primary text-right" style="float: right;">
+					<span class="glyphicon glyphicon-pencil" style="margin-right: 10px;"></span>{{ app.i18n.labels.edit }}
+				</a>
+			</td>
+			<td>
+				<span style="font-size: 14pt;">{{ group }}</span>
+			</td>
+			<td style="width: 70px;">
+				<a href="{{ path('group-delete', {'id': key}) }}" class="btn btn-danger text-right" style="float: right;">
+					<span class="glyphicon glyphicon-remove-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.delete }}
+				</a>
+			</td>
+		</tr>
+	{% endfor %}
 
 	<!-- Add -->
 	<tr>
 		<td colspan="3">
-			<button type="button" class="btn btn-primary text-right" style="float: right;">
+			<a href="{{ path('group-new') }}" class="btn btn-primary text-right" style="float: right;">
 				<span class="glyphicon glyphicon-plus-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.add }}
-			</button>
+			</a>
 		</td>
 	</tr>
 	<!-- /Add -->
