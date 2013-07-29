@@ -2,67 +2,32 @@
 
 {% block body %}
 
-<legend>Wohnzimmer</legend>
+{% for gKey, group in app.data.groups %}
 
-	<table class="table table-striped">
-	<!-- Switch All -->
-	<tr>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-success" style="float: left;">{{ app.i18n.labels.on }}</button>
-		</td>
-		<td>
-			<span style="font-size: 14pt; font-style: italic;">{{ app.i18n.labels.all }}</span>
-		</td>
-		<td style="width: 40px;">
-			<button type="button" class="btn btn-danger" style="float: right;">{{ app.i18n.labels.off }}</button>
-		</td>
-	</tr>
-	<!-- /Switch All -->
-
-	<!-- View -->
-	<tr>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-success" style="float: left;">{{ app.i18n.labels.on }}</button>
-		</td>
-		<td>
-			<span style="font-size: 14pt;">Stehlampe</span>
-		</td>
-		<td style="width: 40px;">
-			<button type="button" class="btn btn-danger" style="float: right;">{{ app.i18n.labels.off }}</button>
-		</td>
-	</tr>
-
-	<tr>
-		<td style="width: 70px;">
-			<button type="button" class="btn btn-success" style="float: left;">{{ app.i18n.labels.on }}</button>
-		</td>
-		<td>
-			<span style="font-size: 14pt;">Stehlampe 2</span>
-		</td>
-		<td style="width: 40px;">
-			<button type="button" class="btn btn-danger" style="float: right;">{{ app.i18n.labels.off }}</button>
-		</td>
-	</tr>
-	<!-- /View -->
-	</table>
-
-<legend>Balkon</legend>
+	<legend>{{ group }}</legend>
 
 	<table class="table table-striped">
 
-	<!-- View -->
+	{% for key, switch in app.data.switches|sort if switch.group == gKey %}
 	<tr>
 		<td style="width: 70px;">
-			<button type="button" class="btn btn-success" style="float: left;">{{ app.i18n.labels.on }}</button>
+			<a onclick="alert('{{ switch.config }} 1');" class="btn btn-success" style="float: left;">
+				{{ app.i18n.labels.on }}
+			</a>
 		</td>
 		<td>
-			<span style="font-size: 14pt;">Brunnen</span>
+			<span style="font-size: 14pt;">{{ switch.name }}</span>
 		</td>
 		<td style="width: 40px;">
-			<button type="button" class="btn btn-danger" style="float: right;">{{ app.i18n.labels.off }}</button>
+			<a onclick="alert('{{ switch.config }} 0');" class="btn btn-danger" style="float: right;">
+				{{ app.i18n.labels.off }}
+			</a>
 		</td>
 	</tr>
-	<!-- /View -->
+	{% endfor %}
+	
 	</table>
+	
+{% endfor %}
 
 {% endblock %}

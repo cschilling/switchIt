@@ -2,16 +2,22 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-$app = new Silex\Application();
+$app          = new Silex\Application();
 $app['debug'] = true;
 $app['title'] = 'RaspSwitcher v0.2';
+$app['i18n']  = json_decode(file_get_contents(__DIR__.'/i18n/de.json'), true);
+
+// set data
+$data  = json_decode(file_get_contents(__DIR__.'/data.json'),    true);
+
+asort($data['groups']);
+
+$app['data'] = $data;
 
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
-
-$app['i18n'] = json_decode(file_get_contents(__DIR__.'/i18n/de.json'), true);
 
 // routing
 $app->get('/', function() use ($app) {
