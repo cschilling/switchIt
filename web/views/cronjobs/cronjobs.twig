@@ -10,7 +10,7 @@
 	<legend>{{ app.i18n.titles.cronjobs }}</legend>
 
 	<table class="table table-striped">
-		{% for key, group in app.data.cronjobs %}
+		{% for key, cronjob in app.data.cronjobs %}
 			<tr>
 				<td style="width: 70px;">
 					<a href="{{ path('cron-edit', {'id': key}) }}" class="btn btn-primary text-right" style="float: right;">
@@ -18,7 +18,7 @@
 					</a>
 				</td>
 				<td>
-					<span style="font-size: 14pt;">{{ cron }}</span>
+					<span style="font-size: 14pt;">{{ cronjob.name }}</span>
 				</td>
 				<td style="width: 70px;">
 					<a href="{{ path('cron-delete', {'id': key}) }}" class="btn btn-danger text-right" style="float: right;">

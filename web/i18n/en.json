@@ -1,5 +1,7 @@
 {
 	"locale": "English",
+	
+	"days": { "1": "Mo", "2": "Tu", "3": "We", "4": "Th", "5": "Fr", "6": "Sa", "7": "Su" },
 
 	"labels": {
 		"on":"On",
@@ -15,12 +17,14 @@
 		"switch":"Switch",
 		"name":"Name",
 		"group":"Group",
+		"time":"Time",
 		"new_switch":"Add switch",
 		"new_group":"Create group",
 		"new_cronjob":"Add Cronjob",
 		"all_group":"Whole group",
 		"language":"Language",
-		"servertime":"Servertime"
+		"servertime":"Servertime",
+		"weekdays":"Days of the week"
 	},
 
 	"titles": {
@@ -28,7 +32,9 @@
 		"edit_switch":"Edit Switch",
 		"add_group":"Add Group",
 		"edit_group":"Edit Group",
-		"cronjobs":"Cronjobs"
+		"cronjobs":"Cronjobs",
+		"add_cronjob":"Add Cronjob",
+		"edit_cronjob":"Edit Cronjob"
 	},
 
 	"nav": {

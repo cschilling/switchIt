@@ -33,7 +33,7 @@ $app->before(function() use ($app) {
 
 // routing
 $app->get('/', function() use ($app) {
-	return $app['twig']->render('show.twig');
+	return $app['twig']->render('control/control.twig');
 })->bind('home');
 
 $app->get('/about', function() use ($app) {
@@ -62,7 +62,7 @@ $app->get('/settings', function() use ($app) {
 		}
 	}
 
-	return $app['twig']->render('settings.twig', array('aLangFiles' => $aLangFiles));
+	return $app['twig']->render('settings/settings.twig', array('aLangFiles' => $aLangFiles));
 })->bind('settings');
 
 // save new/changed switch
@@ -85,16 +85,16 @@ $app->post('/settings/save', function (Request $request) use ($app, $dataFile) {
 })->bind('settings-save');
 
 $app->get('/switches/edit', function() use ($app) {
-	return $app['twig']->render('switches.twig');
+	return $app['twig']->render('switches/switches.twig');
 })->bind('switches');
 
 $app->get('/switch/edit/{id}', function($id) use ($app) {
-	return $app['twig']->render('switch_edit.twig', array('id' => $id));
+	return $app['twig']->render('switches/switch_edit.twig', array('id' => $id));
 })->bind('switch-edit');
 
 $app->get('/switch/new', function() use ($app) {
 	if (sizeof($app['data']['groups']))
-		return $app['twig']->render('switch_edit.twig', array('id' => 0));
+		return $app['twig']->render('switches/switch_edit.twig', array('id' => 0));
 	else
 	{
 		$app['session']->set('flash', array(
@@ -176,15 +176,15 @@ $app->post('/switch/save', function (Request $request) use ($app, $dataFile) {
 
 
 $app->get('/groups/edit', function() use ($app) {
-	return $app['twig']->render('groups.twig');
+	return $app['twig']->render('groups/groups.twig');
 })->bind('groups');
 
 $app->get('/group/edit/{id}', function($id) use ($app) {
-	return $app['twig']->render('group_edit.twig', array('id' => $id));
+	return $app['twig']->render('groups/group_edit.twig', array('id' => $id));
 })->bind('group-edit');
 
 $app->get('/group/new', function() use ($app) {
-	return $app['twig']->render('group_edit.twig', array('id' => 0));
+	return $app['twig']->render('groups/group_edit.twig', array('id' => 0));
 })->bind('group-new');
 
 $app->get('/group/delete/{id}', function($id) use ($app, $dataFile) {
@@ -279,22 +279,19 @@ $app->post('/group/save', function (Request $request) use ($app, $dataFile) {
 
 $app->get('/cron', function() use ($app) {
 	$time = date("Y, n, j, G, i, s");
-	return $app['twig']->render('cron.twig', array('time' => $time));
+	return $app['twig']->render('cronjobs/cronjobs.twig', array('time' => $time));
 })->bind('cron');
 
 $app->get('/cron/new', function() use ($app) {
-	$time = date("Y, n, j, G, i, s");
-	return $app['twig']->render('cron.twig', array('time' => $time));
+	return $app['twig']->render('cronjobs/cronjob_edit.twig', array('id' => 0));
 })->bind('cron-new');
 
 $app->get('/cronjob/edit/{id}', function($id) use ($app) {
-	$time = date("Y, n, j, G, i, s");
-	return $app['twig']->render('cron.twig', array('time' => $time));
+	return $app['twig']->render('cronjobs/cronjob_edit.twig');
 })->bind('cron-edit');
 
 $app->get('/cronjob/save', function() use ($app) {
-	$time = date("Y, n, j, G, i, s");
-	return $app['twig']->render('cron.twig', array('time' => $time));
+	return $app->redirect($app['url_generator']->generate('cron'));
 })->bind('cron-save');
 
 

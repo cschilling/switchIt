@@ -1,6 +1,8 @@
 {
 	"locale": "Deutsch",
 	
+	"days": { "1": "Mo", "2": "Di", "3": "Mi", "4": "Do", "5": "Fr", "6": "Sa", "7": "So" },
+	
 	"labels": {
 		"on":"An",
 		"off":"Aus",
@@ -15,12 +17,14 @@
 		"switch":"Schalter",
 		"name":"Name",
 		"group":"Gruppe",
+		"time":"Zeit",
 		"new_switch":"Schalter hinzuf\u00fcgen",
 		"new_group":"Gruppe erstellen",
 		"new_cronjob":"Neu",
 		"all_group":"Gesamte Gruppe",
 		"language":"Sprache",
-		"servertime":"Serverzeit"
+		"servertime":"Serverzeit",
+		"weekdays":"Wochentage"
 	},
 
 	"titles": {
@@ -28,7 +32,9 @@
 		"edit_switch":"Schalter \u00e4ndern",
 		"add_group":"Neue Gruppe",
 		"edit_group":"Gruppe \u00e4ndern",
-		"cronjobs":"Zeitschaltungen"
+		"cronjobs":"Zeitschaltungen",
+		"add_cronjob":"Neue Zeitschaltung",
+		"edit_cronjob":"Zeitschaltung \u00e4ndern"
 	},
 
 	"nav": {
