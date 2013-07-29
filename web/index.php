@@ -9,7 +9,7 @@ $dataFile = __DIR__.'/data.json';
 
 $app          = new Silex\Application();
 $app['debug'] = true;
-$app['title'] = 'RaspSwitcher v0.3';
+$app['title'] = 'RaspSwitcher v0.8';
 $app['i18n']  = json_decode(file_get_contents(__DIR__.'/i18n/de.json'), true);
 
 // load Data from file
@@ -47,7 +47,18 @@ $app->get('/switch/edit/{id}', function($id) use ($app) {
 })->bind('switch-edit');
 
 $app->get('/switch/new', function() use ($app) {
-	return $app['twig']->render('switch_edit.twig', array('id' => 0));
+	if (sizeof($app['data']['groups']))
+		return $app['twig']->render('switch_edit.twig', array('id' => 0));
+	else
+	{
+		$app['session']->set('flash', array(
+			'type'  => 'danger',
+			'short' => $app['i18n']['text']['error'],
+			'ext'   => $app['i18n']['errors']['no_groups'],
+		));
+	
+		return $app->redirect($app['url_generator']->generate('groups'));
+	}
 })->bind('switch-new');
 
 $app->get('/switch/delete/{id}', function($id) use ($app, $dataFile) {
@@ -127,17 +138,20 @@ $app->get('/group/new', function() use ($app) {
 
 $app->get('/group/delete/{id}', function($id) use ($app, $dataFile) {
 
-	foreach($app['data']['switches'] AS $switch)
+	if (isset($app['data']['switches']))
 	{
-		if ($switch['group'] == $id)
+		foreach($app['data']['switches'] AS $switch)
 		{
-			$app['session']->set('flash', array(
-				'type'  => 'danger',
-				'short' => $app['i18n']['text']['error'],
-				'ext'   => $app['i18n']['errors']['group_not_empty'],
-			));
+			if ($switch['group'] == $id)
+			{
+				$app['session']->set('flash', array(
+					'type'  => 'danger',
+					'short' => $app['i18n']['text']['error'],
+					'ext'   => $app['i18n']['errors']['group_not_empty'],
+				));
 
-			return $app->redirect($app['url_generator']->generate('groups'));
+				return $app->redirect($app['url_generator']->generate('groups'));
+			}
 		}
 	}
 	
@@ -197,7 +211,12 @@ $app->post('/group/save', function (Request $request) use ($app, $dataFile) {
 	if ($groupId >= 1)
 		$aData['groups'][$groupId] = $groupName;
 	else
-		$aData['groups'][] = $groupName;
+	{
+		if (!sizeof($aData['groups']))
+			$aData['groups'][1] = $groupName;
+		else
+			$aData['groups'][] = $groupName;
+	}
 
 	saveData($aData, $dataFile);
 
@@ -209,10 +228,16 @@ $app->post('/group/save', function (Request $request) use ($app, $dataFile) {
 
 function fetchData($file)
 {
+	if (!file_exists($file))
+		file_put_contents($file, json_encode(array()));
+
 	$aData = json_decode(file_get_contents($file), true);
 
-	asort($aData['groups']);
-	
+	if (isset($aData['groups']))
+		asort($aData['groups']);
+	else
+		$aData['groups'] = array();
+
 	$aData['aFilledGroups'] = getFilledGroups($aData);
 
 	return $aData;
@@ -220,6 +245,9 @@ function fetchData($file)
 
 function saveData(array $aData, $file)
 {
+	if (isset($aData['aFilledGroups']))
+		unset($aData['aFilledGroups']);
+
 	file_put_contents($file, utf8_encode(json_encode($aData)));
 
 	return true;
@@ -228,12 +256,15 @@ function saveData(array $aData, $file)
 function getFilledGroups($aData)
 {
 	$aFilledGroups = array();
-
-	foreach($aData['groups'] AS $kG => $group)
+	
+	if (isset($aData['groups']))
 	{
-		foreach($aData['switches'] AS $switch)
-			if ($switch['group'] == $kG)
-				$aFilledGroups[$kG] = $group;
+		foreach($aData['groups'] AS $kG => $group)
+		{
+			foreach($aData['switches'] AS $switch)
+				if ($switch['group'] == $kG)
+					$aFilledGroups[$kG] = $group;
+		}
 	}
 	
 	asort($aFilledGroups);

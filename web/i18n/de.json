@@ -13,7 +13,8 @@
 		"switch":"Schalter",
 		"name":"Name",
 		"group":"Gruppe",
-		"new_switch":"Schalter hinzuf\u00fcgen"
+		"new_switch":"Schalter hinzuf\u00fcgen",
+		"new_group":"Gruppe erstellen"
 	},
 	
 	"titles": {
@@ -37,6 +38,7 @@
 	"errors": {
 		"no_name_given":"Der Name muss min. 3 Zeichen lang sein",
 		"group_not_empty":"Gruppe kann nicht gel\u00f6scht werden. Der Gruppe sind noch Schalter zugeordnet. Sie m\u00fcssen diesen Schaltern zuerst eine andere Gruppe zuweisen",
-		"groupname_occupied":"Dieser Gruppenname existiert bereits"
+		"groupname_occupied":"Dieser Gruppenname existiert bereits",
+		"no_groups":"Es wurde noch keine Gruppe angelegt. Bitte min. eine Gruppe erstellen"
 	}
 }

@@ -13,7 +13,8 @@
 		"switch":"Switch",
 		"name":"Name",
 		"group":"Group",
-		"new_switch":"Add switch"
+		"new_switch":"Add switch",
+		"new_group":"Create group"
 	},
 	
 	"titles": {
@@ -37,6 +38,7 @@
 	"errors": {
 		"no_name_given":"Name has to be at least 3 chars long",
 		"group_not_empty":"Group cannot be deleted. There are switches that are bound to this group. Change their groupbinding first",
-		"groupname_occupied":"This groupname is already in use"
+		"groupname_occupied":"This groupname is already in use",
+		"no_groups":"No group was found. Please add a group first"
 	}
 }
