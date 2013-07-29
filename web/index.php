@@ -50,13 +50,22 @@ $app->get('/switch/new', function() use ($app) {
 	return $app['twig']->render('switch_edit.twig', array('id' => 0));
 })->bind('switch-new');
 
-$app->get('/switch/delete/{id}', function($id) use ($app) {
+$app->get('/switch/delete/{id}', function($id) use ($app, $dataFile) {
+
+	// delete switch
+	$aData = $app['data'];
+	
+	unset($aData['switches'][$id]);
+
+	saveData($aData, $dataFile);
+
+	$app['data'] = fetchData($dataFile);
 	
 	return $app->redirect($app['url_generator']->generate('switches'));
 })->bind('switch-delete');
 
 // save new/changed switch
-$app->post('/switch/save', function (Request $request) use ($app) {
+$app->post('/switch/save', function (Request $request) use ($app, $dataFile) {
 
 	$switchId = $request->get('id');
 
@@ -85,11 +94,21 @@ $app->post('/switch/save', function (Request $request) use ($app) {
 	for ($i = 'A'; $i <= 'E'; $i++)
 		$switch['config'] .= (is_null($request->get('check_'.$i)))? '0':'1';
 
-	echo '<pre>';
-	print_r($switch);
-	die;
+	
+	// save switch
+	$aData = $app['data'];
+	
+	// new group or just an edit?
+	if ($switchId >= 1)
+		$aData['switches'][$switchId] = $switch;
+	else
+		$aData['switches'][] = $switch;
 
-	return $app->redirect($app['url_generator']->generate('switches', array('id' => $id)));
+	saveData($aData, $dataFile);
+
+	$app['data'] = fetchData($dataFile);
+
+	return $app->redirect($app['url_generator']->generate('switches'));
 
 })->bind('switch-save');
 
@@ -172,7 +191,6 @@ $app->post('/group/save', function (Request $request) use ($app, $dataFile) {
 	}
 	
 	// save group
-
 	$aData = $app['data'];
 	
 	// new group or just an edit?
@@ -185,7 +203,7 @@ $app->post('/group/save', function (Request $request) use ($app, $dataFile) {
 
 	$app['data'] = fetchData($dataFile);
 
-	return $app->redirect($app['url_generator']->generate('groups', array('id' => $id)));
+	return $app->redirect($app['url_generator']->generate('groups'));
 
 })->bind('group-save');
 

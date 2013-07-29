@@ -33,7 +33,7 @@
 				</td>
 				<td style="width: 70px;">
 				
-					<a onclick="alert('Delete switch #{{ key }}')" class="btn btn-danger text-right" style="float: right;">
+					<a href="{{ path('switch-delete', {'id': key}) }}" class="btn btn-danger text-right" style="float: right;">
 						<span class="glyphicon glyphicon-remove-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.delete }}
 					</a>
 				</td>
