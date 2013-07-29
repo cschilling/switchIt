@@ -278,10 +278,24 @@ $app->post('/group/save', function (Request $request) use ($app, $dataFile) {
 })->bind('group-save');
 
 $app->get('/cron', function() use ($app) {
-
 	$time = date("Y, n, j, G, i, s");
 	return $app['twig']->render('cron.twig', array('time' => $time));
 })->bind('cron');
+
+$app->get('/cron/new', function() use ($app) {
+	$time = date("Y, n, j, G, i, s");
+	return $app['twig']->render('cron.twig', array('time' => $time));
+})->bind('cron-new');
+
+$app->get('/cronjob/edit/{id}', function($id) use ($app) {
+	$time = date("Y, n, j, G, i, s");
+	return $app['twig']->render('cron.twig', array('time' => $time));
+})->bind('cron-edit');
+
+$app->get('/cronjob/save', function() use ($app) {
+	$time = date("Y, n, j, G, i, s");
+	return $app['twig']->render('cron.twig', array('time' => $time));
+})->bind('cron-save');
 
 
 function fetchData($file)
@@ -300,6 +314,9 @@ function fetchData($file)
 	
 	if (!isset($aData['locale']))
 		$aData['locale'] = 'en';
+		
+	if (!isset($aData['cronjobs']))
+		$aData['cronjobs'] = array();
 
 	return $aData;
 }

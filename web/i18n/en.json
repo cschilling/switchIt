@@ -17,6 +17,7 @@
 		"group":"Group",
 		"new_switch":"Add switch",
 		"new_group":"Create group",
+		"new_cronjob":"Add Cronjob",
 		"all_group":"Whole group",
 		"language":"Language",
 		"servertime":"Servertime"
@@ -31,9 +32,9 @@
 	},
 
 	"nav": {
-		"home":"Home",
-		"switches":"Edit switches",
-		"groups":"Edit groups",
+		"home":"Control",
+		"switches":"Switches",
+		"groups":"Groups",
 		"cron":"Cronjobs",
 		"settings":"Settings",
 		"about":"About"

@@ -45,9 +45,31 @@
 				</td>
 			</tr>
 			{% endif %}
-		
+
 		</table>
-		
+
 	{% endfor %}
+
+	{% if app.data.aFilledGroups %}
+		<legend>{{ app.i18n.labels.all }}</legend>
+
+		<table class="table table-striped">
+		<tr>
+			<td style="width: 70px;">
+				<a onclick="alert('Alle schalten');" class="btn btn-success" style="float: left;">
+					{{ app.i18n.labels.on }}
+				</a>
+			</td>
+			<td class="text-center">
+				<span style="font-size: 14pt; font-style: italic;">{{ app.i18n.labels.all }}</span>
+			</td>
+			<td style="width: 40px;">
+				<a onclick="alert('Alle abschalten');" class="btn btn-danger" style="float: right;">
+					{{ app.i18n.labels.off }}
+				</a>
+			</td>
+		</tr>
+		</table>
+	{% endif %}
 
 {% endblock %}

@@ -17,6 +17,7 @@
 		"group":"Gruppe",
 		"new_switch":"Schalter hinzuf\u00fcgen",
 		"new_group":"Gruppe erstellen",
+		"new_cronjob":"Neu",
 		"all_group":"Gesamte Gruppe",
 		"language":"Sprache",
 		"servertime":"Serverzeit"
@@ -31,9 +32,9 @@
 	},
 
 	"nav": {
-		"home":"Startseite",
-		"switches":"Schalter \u00e4ndern",
-		"groups":"Gruppen \u00e4ndern",
+		"home":"Steuerung",
+		"switches":"Schalter",
+		"groups":"Gruppen",
 		"cron":"Zeitschaltungen",
 		"settings":"Einstellungen",
 		"about":"Info"
