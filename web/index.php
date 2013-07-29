@@ -257,7 +257,7 @@ function getFilledGroups($aData)
 {
 	$aFilledGroups = array();
 	
-	if (isset($aData['groups']))
+	if (isset($aData['groups']) && isset($aData['switches']))
 	{
 		foreach($aData['groups'] AS $kG => $group)
 		{
