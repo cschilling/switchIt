@@ -113,7 +113,12 @@ $app->post('/switch/save', function (Request $request) use ($app, $dataFile) {
 	if ($switchId >= 1)
 		$aData['switches'][$switchId] = $switch;
 	else
-		$aData['switches'][] = $switch;
+	{
+		if (!sizeof($aData['switches']))
+			$aData['switches'][1] = $switch;
+		else
+			$aData['switches'][] = $switch;
+	}
 
 	saveData($aData, $dataFile);
 
