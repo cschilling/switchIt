@@ -86,27 +86,32 @@
 	</tr>
 	<!-- /Add -->
 	
+	</table>
+	
+	
+	<legend><?php echo $L_dip; ?></legend>
+	
+	<table class="table table-striped">
 	
 	<!-- New/Edit -->
-	<tr>
-		<td colspan="3">
-			<legend><?php echo $L_dip; ?></legend>
-		</td>
-	</tr>
-	
+	<?php $aAlpha = range('A', 'E'); ?>
 	<?php for ($i = 1; $i <= 5; $i++): ?>
 	<tr>
-		<td style="width: 70px;">
-			<?php echo $i; ?>
-		</td>
-		<td colspan="2">
+		<td>
 			<div class="switch" data-on="success" data-on-label="<?php echo $i; ?>" data-off="danger" data-off-label="<?php echo $i; ?>">
 				<input type="checkbox" checked />
 			</div>
 		</td>
+		<td style="width: 40px;"></td>
+		<td>
+			<div class="switch" data-on="success" data-on-label="<?php echo $aAlpha[$i -1]; ?>" data-off="danger" data-off-label="<?php echo $aAlpha[$i -1]; ?>">
+				<input type="checkbox" />
+			</div>
+		</td>
 	</tr>
 	<?php endfor; ?>
-	
+
+	<?php /*
 	<?php for ($i = 'A'; $i <= 'E'; $i++): ?>
 	<tr>
 		<td style="width: 70px;">
@@ -119,7 +124,7 @@
 		</td>
 	</tr>
 	<?php endfor; ?>
-
+	*/ ?>
 	
 
 	<!-- /Edit -->
