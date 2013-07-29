@@ -7,7 +7,17 @@
 		"add":"New",
 		"all":"All",
 		"dip":"DIP-Switches",
-		"groups":"Groups"
+		"groups":"Groups",
+		"save":"Save",
+		"back":"Back",
+		"switch":"Switch",
+		"name":"Name",
+		"group":"Group"
+	},
+	
+	"titles": {
+		"add_switch":"Add Switch",
+		"edit_switch":"Edit Switch"
 	},
 
 	"nav": {
@@ -15,5 +25,13 @@
 		"switches":"Edit switches",
 		"groups":"Edit groups",
 		"about":"About"
+	},
+
+	"text": {
+		"error":"Error"
+	},
+
+	"errors": {
+		"no_name_given":"Name has to be at least 3 chars long"
 	}
 }

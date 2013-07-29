@@ -2,67 +2,74 @@
 
 {% block body %}
 
-	{% set switch = app.data.switches[id] %}
+	{% if id == 0 %}
+		{% set switch = {"name": "", "group": 0, "config": "0000010000"} %}
+	{% else %}
+		{% set switch = app.data.switches[id] %}
+	{% endif %}
 
-	<legend>Schalter</legend>
+	<form method="POST" action="{{ path('save-switch') }}">
+		<input type="hidden" name="id" value"{{ id }}" />
 
-	<table class="table table-striped">
-	<tr>
-		<td style="width: 70px;">
-			<label for="name">Name</label>
-		</td>
-		<td>
-			<input type="text" name="name" value="{{ switch.name }}" id="name" class="form-control" />
-		</td>
-	</tr>
+		<legend>{% if id == 0 %} {{ app.i18n.titles.add_switch }} {% else %} {{ app.i18n.titles.edit_switch }} {% endif %} </legend>
 
-	<tr>
-		<td style="width: 70px;">
-			<label for="group">Group</label>
-		</td>
-		<td>
-			<select name="group" id="group" class="form-control">
+		<table class="table table-striped">
+		<tr>
+			<td style="width: 70px;">
+				<label for="name">{{ app.i18n.labels.name }}</label>
+			</td>
+			<td>
+				<input type="text" name="name" value="{{ switch.name }}" id="name" class="form-control" />
+			</td>
+		</tr>
 
-				{% for key,group in app.data.groups %}
-					<option value="{{ key }}"{% if key == switch.group %}selected{% endif %}>{{ group }}</option>
-				{% endfor %}
+		<tr>
+			<td style="width: 70px;">
+				<label for="group">{{ app.i18n.labels.group }}</label>
+			</td>
+			<td>
+				<select name="group" id="group" class="form-control">
 
-			</select>
-		</td>
-	</tr>
-	</table>
+					{% for key,group in app.data.groups %}
+						<option value="{{ key }}"{% if key == switch.group %}selected{% endif %}>{{ group }}</option>
+					{% endfor %}
+
+				</select>
+			</td>
+		</tr>
+		</table>
 
 
-	<legend>{{ app.i18n.labels.dip }}</legend>
+		<legend>{{ app.i18n.labels.dip }}</legend>
 
-	<table class="table table-striped">
-	
-	<!-- New/Edit -->
-	{% set aAlpha = {1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E'} %}
-	{% for i in 1..5 %}
-	<tr>
-		<td>
-			<div class="switch" data-on="success" data-on-label="{{ i }}" data-off="danger" data-off-label="{{ i }}">
-				<input type="checkbox" name="check_{{ i }}" {% if switch.config|slice(i -1, 1) == 1 %}checked{% endif %} />
-			</div>
-		</td>
-		<td style="width: 40px;"></td>
-		<td>
-			<div class="switch" data-on="success" data-on-label="{{ attribute(aAlpha, i) }}" data-off="danger" data-off-label="{{ attribute(aAlpha, i) }}">
-				<input type="checkbox" name="check_{{ attribute(aAlpha, i) }}" {% if switch.config|slice(i +4, 1) == 1 %}checked{% endif %} />
-			</div>
-		</td>
-	</tr>
-	{% endfor %}
-	<!-- /New/Edit -->
-	</table>
-	
-	<a href="{{ path('edit-switch', {'id': 1}) }}">
-	
-	<input type="submit name="send" value="Speichern" class="btn btn-primary" style="float: left; margin-left: 10px;">
+		<table class="table table-striped">
+		
+		<!-- New/Edit -->
+		{% set aAlpha = {1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E'} %}
+		{% for i in 1..5 %}
+		<tr>
+			<td>
+				<div class="switch" data-on="success" data-on-label="{{ i }}" data-off="danger" data-off-label="{{ i }}">
+					<input type="checkbox" name="check_{{ i }}" {% if switch.config|slice(i -1, 1) == 1 %}checked{% endif %} />
+				</div>
+			</td>
+			<td style="width: 40px;"></td>
+			<td>
+				<div class="switch" data-on="success" data-on-label="{{ attribute(aAlpha, i) }}" data-off="danger" data-off-label="{{ attribute(aAlpha, i) }}">
+					<input type="checkbox" name="check_{{ attribute(aAlpha, i) }}" {% if switch.config|slice(i +4, 1) == 1 %}checked{% endif %} />
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+		<!-- /New/Edit -->
+		</table>
+		
+		<input type="submit" name="send" value="{{ app.i18n.labels.save }}" class="btn btn-primary" style="float: left; margin-left: 10px;">
 
-	<a href="{{ path('switches') }}" class="btn btn-danger" style="float: right; margin-right: 10px;">
-		Zur&uuml;ck
-	</a>
+		<a href="{{ path('switches') }}" class="btn btn-danger" style="float: right; margin-right: 10px;">
+			{{ app.i18n.labels.back }}
+		</a>
+
+	</form>
 
 {% endblock %}

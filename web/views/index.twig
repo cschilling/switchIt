@@ -12,7 +12,17 @@
 	<div style="margin-bottom: 60px;">
 		{% include 'nav.twig' %}
 	</div>
-	
+
+	{% block flash %}
+	{% if flash is defined %}
+		<div class="alert alert-{{ flash.type }}">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>{{ flash.short }}:</strong>
+			{{ flash.ext }}
+		</div>
+	{% endif %}
+	{% endblock %}
+
 	{% block body %}{% endblock %}
 
     <!-- JavaScript plugins (requires jQuery) -->

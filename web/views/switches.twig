@@ -28,9 +28,24 @@
 			</tr>
 
 			{% endfor %}
+			
+		<!-- Add -->
+		<tr>
+			<td colspan="3">
+				<a href="{{ path('new-switch') }}">
+					<button type="button" class="btn btn-primary text-right" style="float: right;">
+						<span class="glyphicon glyphicon-plus-sign" style="margin-right: 10px;"></span>{{ app.i18n.labels.add }}
+					</button>
+				</a>
+			</td>
+		</tr>
+		<!-- /Add -->
 		
 		</table>
 		
 	{% endfor %}
+	
+	
+	
 
 {% endblock %}

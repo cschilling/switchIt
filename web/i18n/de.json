@@ -7,13 +7,31 @@
 		"add":"Neu",
 		"all":"Alle",
 		"dip":"DIP-Schalter",
-		"groups":"Gruppen"
+		"groups":"Gruppen",
+		"save":"Speichern",
+		"back":"Zur\u00fcck",
+		"switch":"Schalter",
+		"name":"Name",
+		"group":"Gruppe"
 	},
 	
+	"titles": {
+		"add_switch":"Neuer Schalter",
+		"edit_switch":"Schalter \u00e4ndern"
+	},
+
 	"nav": {
 		"home":"Startseite",
 		"switches":"Schalter \u00e4ndern",
 		"groups":"Gruppen \u00e4ndern",
 		"about":"Info"
+	},
+
+	"text": {
+		"error":"Fehler"
+	},
+
+	"errors": {
+		"no_name_given":"Der Name muss min. 3 Zeichen lang sein"
 	}
 }
