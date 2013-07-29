@@ -1,0 +1,19 @@
+{
+	"labels": {
+		"on":"An",
+		"off":"Aus",
+		"edit":"\u00c4ndern",
+		"delete":"L\u00f6schen",
+		"add":"Neu",
+		"all":"Alle",
+		"dip":"DIP-Schalter",
+		"groups":"Gruppen"
+	},
+	
+	"nav": {
+		"home":"Startseite",
+		"switches":"Schalter \u00e4ndern",
+		"groups":"Gruppen \u00e4ndern",
+		"about":"Info"
+	}
+}

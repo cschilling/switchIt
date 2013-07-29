@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title app.title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{{ url('home') }}css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{ url('home') }}css/bootstrap-glyphicons.css" rel="stylesheet" media="screen">
+    <link href="{{ url('home') }}css/bootstrap-switch.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+	<div style="margin-bottom: 60px;">
+		{% include 'nav.twig' %}
+	</div>
+
+	{% block body %}{% endblock %}
+
+    <!-- JavaScript plugins (requires jQuery) -->
+    <script src="{{ url('home') }}js/jquery-1-10-2.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ url('home') }}js/bootstrap.min.js"></script>
+	
+	<script src="{{ url('home') }}js/bootstrap-switch.min.js"></script>
+  </body>
+</html>

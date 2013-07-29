@@ -1,0 +1,19 @@
+{
+	"labels": {
+		"on":"On",
+		"off":"Off",
+		"edit":"Edit",
+		"delete":"Delete",
+		"add":"New",
+		"all":"All",
+		"dip":"DIP-Switches",
+		"groups":"Groups"
+	},
+
+	"nav": {
+		"home":"Home",
+		"switches":"Edit switches",
+		"groups":"Edit groups",
+		"about":"About"
+	}
+}
