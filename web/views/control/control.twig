@@ -13,7 +13,7 @@
 				{% set switchCount = switchCount +1 %}
 			<tr>
 				<td style="width: 70px;">
-					<a onclick="alert('{{ switch.config }} 1');" class="btn btn-success" style="float: left;">
+					<a onclick="switchIt (1, {{ key}}, 0, 0);" class="btn btn-success" style="float: left;">
 						{{ app.i18n.labels.on }}
 					</a>
 				</td>
@@ -21,7 +21,7 @@
 					<span style="font-size: 14pt;">{{ switch.name }}</span>
 				</td>
 				<td style="width: 40px;">
-					<a onclick="alert('{{ switch.config }} 0');" class="btn btn-danger" style="float: right;">
+					<a onclick="switchIt (0, {{ key}}, 0, 0);" class="btn btn-danger" style="float: right;">
 						{{ app.i18n.labels.off }}
 					</a>
 				</td>
@@ -31,7 +31,7 @@
 			{% if switchCount > 1 %}
 			<tr>
 				<td style="width: 70px;">
-					<a onclick="alert('Alle: {{ switchCount }}');" class="btn btn-success" style="float: left;">
+					<a onclick="switchIt (1, 0, {{ gKey }}, 0);" class="btn btn-success" style="float: left;">
 						{{ app.i18n.labels.on }}
 					</a>
 				</td>
@@ -39,7 +39,7 @@
 					<span style="font-size: 14pt; font-style: italic;">{{ app.i18n.labels.all_group }}</span>
 				</td>
 				<td style="width: 40px;">
-					<a onclick="alert('Alle: {{ switchCount }}');" class="btn btn-danger" style="float: right;">
+					<a onclick="switchIt (0, 0, {{ gKey }}, 0);" class="btn btn-danger" style="float: right;">
 						{{ app.i18n.labels.off }}
 					</a>
 				</td>
@@ -56,7 +56,7 @@
 		<table class="table table-striped">
 		<tr>
 			<td style="width: 70px;">
-				<a onclick="alert('Alle schalten');" class="btn btn-success" style="float: left;">
+				<a onclick="switchIt (1, 0, 0, 1);" class="btn btn-success" style="float: left;">
 					{{ app.i18n.labels.on }}
 				</a>
 			</td>
@@ -64,12 +64,30 @@
 				<span style="font-size: 14pt; font-style: italic;">{{ app.i18n.labels.all }}</span>
 			</td>
 			<td style="width: 40px;">
-				<a onclick="alert('Alle abschalten');" class="btn btn-danger" style="float: right;">
+				<a onclick="switchIt (0, 0, 0, 1);" class="btn btn-danger" style="float: right;">
 					{{ app.i18n.labels.off }}
 				</a>
 			</td>
 		</tr>
 		</table>
 	{% endif %}
+
+	<script language="JavaScript">
+		function switchIt (switchOn, switchId, groupId, all)
+		{
+			switchOn = typeof switchOn !== 'undefined' ? switchOn : 0;
+			switchId = typeof switchId !== 'undefined' ? switchId : 0;
+			groupId  = typeof groupId  !== 'undefined' ? groupId  : 0;
+			all      = typeof all      !== 'undefined' ? all      : 0;
+
+			$.ajax({
+				url: "{{ path('switch-it') }}",
+				type: "post",
+				data: "&switchOn="+switchOn+"&switchId="+switchId+"&groupId="+groupId+"&all="+all,
+				success: function(){},
+				error:function(){}   
+			}); 
+		}
+	</script>
 
 {% endblock %}

@@ -2,6 +2,8 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+include("switch.php");
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -9,13 +11,13 @@ $dataFile = __DIR__.'/data.json';
 
 $app          = new Silex\Application();
 $app['debug'] = true;
-$app['title'] = 'RaspSwitcher v0.8';
+$app['title'] = 'RaspSwitcher v0.9';
 
 // load Data from file
 $app['data']  = fetchData($dataFile);
 
 // load i18n
-$app['i18n']  = json_decode(file_get_contents(__DIR__.'/i18n/'.$app['data']['locale'].'.json'), true);
+$app['i18n']  = json_decode(file_get_contents(__DIR__.'/i18n/'.$app['data']['options']['locale'].'.json'), true);
 
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
@@ -39,6 +41,41 @@ $app->get('/', function() use ($app) {
 $app->get('/about', function() use ($app) {
 	return $app['twig']->render('about.twig');
 })->bind('about');
+
+$app->post('/switch', function (Request $request) use ($app, $dataFile) {
+
+	$aToSwitch = array();
+	
+	if (!is_null($request->get('switchId')) && $request->get('switchId') > 0)
+	{
+		$aToSwitch = array(0 => $request->get('switchId'));
+	}
+	elseif (!is_null($request->get('groupId')) && $request->get('groupId') > 0)
+	{
+		foreach($app['data']['switches'] AS $switchKey => $switch)
+		{
+			if ($switch['group'] == $request->get('groupId'))
+				$aToSwitch[] = $switchKey;
+		}
+	}
+	elseif (!is_null($request->get('all')) && $request->get('all') > 0)
+	{
+		foreach($app['data']['switches'] AS $switchKey => $switch)
+			$aToSwitch[] = $switchKey;
+	}
+	
+	foreach($aToSwitch AS $switchKey)
+	{
+		$switch = $app['data']['switches'][$switchKey];
+
+		// switch it!
+		do_switch($switch['config'], $switch['number'], $request->get('switchOn'), $app['data']['options']['delay'], $app['data']['options']['server'], $app['data']['options']['port']);
+	}
+	
+	return true;
+	
+})->bind('switch-it');
+
 
 $app->get('/settings', function() use ($app) {
 
@@ -68,13 +105,43 @@ $app->get('/settings', function() use ($app) {
 // save new/changed switch
 $app->post('/settings/save', function (Request $request) use ($app, $dataFile) {
 
-	$language = $request->get('locale');
-
-	
 	// save settings
 	$aData = $app['data'];
 	
-	$aData['locale'] = $language;
+	if (!is_null($request->files->get('file')))
+	{
+		$fContent = json_decode(file_get_contents($request->files->get('file')), true);
+
+		if (isset($fContent['options']['locale']))
+		{
+			file_put_contents($dataFile, file_get_contents($request->files->get('file')));
+			
+			$app['data'] = fetchData($dataFile);
+			
+			$app['session']->set('flash', array(
+				'type'  => 'success',
+				'short' => $app['i18n']['text']['info'],
+				'ext'   => $app['i18n']['text']['data_restored'],
+			));
+
+			return $app->redirect($app['url_generator']->generate('settings'));
+		}
+		else
+		{
+			$app['session']->set('flash', array(
+				'type'  => 'danger',
+				'short' => $app['i18n']['text']['error'],
+				'ext'   => $app['i18n']['errors']['datafile_invalid'],
+			));
+			
+			return $app->redirect($app['url_generator']->generate('settings'));
+		}
+	}
+
+	$aData['options']['locale'] = $request->get('locale');
+	$aData['options']['server'] = $request->get('server');
+	$aData['options']['port']   = $request->get('port');
+	$aData['options']['delay']  = $request->get('delay');
 
 	saveData($aData, $dataFile);
 
@@ -83,6 +150,19 @@ $app->post('/settings/save', function (Request $request) use ($app, $dataFile) {
 	return $app->redirect($app['url_generator']->generate('settings'));
 
 })->bind('settings-save');
+
+$app->match('settings/export', function() use($app, $dataFile) {
+
+	$stream = function () use ($dataFile) {
+        readfile($dataFile);
+    };
+
+	return $app->stream($stream, 200, array(
+		'Content-Type'        => 'application/json',
+		'Content-length'      => filesize($dataFile),
+		'Content-Disposition' => 'attachment; filename="data.json"'	
+	));
+})->bind('settings-export');
 
 $app->get('/switches/edit', function() use ($app) {
 	return $app['twig']->render('switches/switches.twig');
@@ -129,6 +209,7 @@ $app->post('/switch/save', function (Request $request) use ($app, $dataFile) {
 	$switch           = array();
 	$switch['name']   = $request->get('name');
 	$switch['group']  = $request->get('group');
+	$switch['number'] = str_pad($request->get('number'), 2, '0', STR_PAD_LEFT);
 	$switch['config'] = '';
 
 	if (strlen($switch['name']) < 3)
@@ -144,14 +225,11 @@ $app->post('/switch/save', function (Request $request) use ($app, $dataFile) {
 		else
 			return $app->redirect($app['url_generator']->generate('switch-edit', array('id' => $id)));
 	}
-	
+
 	for ($i = 1; $i <= 5; $i++)
 		$switch['config'] .= (is_null($request->get('check_'.$i)))? '0':'1';
-	
-	for ($i = 'A'; $i <= 'E'; $i++)
-		$switch['config'] .= (is_null($request->get('check_'.$i)))? '0':'1';
 
-	
+
 	// save switch
 	$aData = $app['data'];
 	
@@ -412,9 +490,19 @@ function fetchData($file)
 
 	$aData['aFilledGroups'] = getFilledGroups($aData);
 	
-	if (!isset($aData['locale']))
-		$aData['locale'] = 'en';
+	if (!isset($aData['options']['locale']))
+		$aData['options']['locale'] = 'en';
+	
+	if (!isset($aData['options']['server']))
+		$aData['options']['server'] = '127.0.0.1';
+	
+	if (!isset($aData['options']['port']))
+		$aData['options']['port'] = '11337';
 		
+	if (!isset($aData['options']['delay']))
+		$aData['options']['delay'] = '0';
+
+
 	if (!isset($aData['cronjobs']))
 		$aData['cronjobs'] = array();
 		

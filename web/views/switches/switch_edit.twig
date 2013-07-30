@@ -3,7 +3,7 @@
 {% block body %}
 
 	{% if id == 0 %}
-		{% set switch = {"name": "", "group": 0, "config": "0000010000"} %}
+		{% set switch = {"name": "", "group": 0, "config": "00000", "number": "1"} %}
 	{% else %}
 		{% set switch = app.data.switches[id] %}
 	{% endif %}
@@ -15,7 +15,7 @@
 
 		<table class="table table-striped">
 		<tr>
-			<td style="width: 70px;">
+			<td style="width: 100px;">
 				<label for="name">{{ app.i18n.labels.name }}</label>
 			</td>
 			<td>
@@ -24,7 +24,7 @@
 		</tr>
 
 		<tr>
-			<td style="width: 70px;">
+			<td style="width: 100px;">
 				<label for="group">{{ app.i18n.labels.group }}</label>
 			</td>
 			<td>
@@ -37,15 +37,24 @@
 				</select>
 			</td>
 		</tr>
+
+		<tr>
+			<td style="width: 100px;">
+				<label for="number">{{ app.i18n.labels.switch_no }}</label>
+			</td>
+			<td>
+				<input type="number" min="1" max="99" id="number" name="number" value="{{ switch.number }}" class="form-control" style="width: 60px;" />
+			</td>
+		</tr>
+		
 		</table>
 
 
 		<legend>{{ app.i18n.labels.dip }}</legend>
 
 		<table class="table table-striped">
-		
+
 		<!-- New/Edit -->
-		{% set aAlpha = {1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E'} %}
 		{% for i in 1..5 %}
 		<tr>
 			<td>
@@ -53,16 +62,11 @@
 					<input type="checkbox" name="check_{{ i }}" {% if switch.config|slice(i -1, 1) == 1 %}checked{% endif %} />
 				</div>
 			</td>
-			<td style="width: 40px;"></td>
-			<td>
-				<div class="switch" data-on="success" data-on-label="{{ attribute(aAlpha, i) }}" data-off="danger" data-off-label="{{ attribute(aAlpha, i) }}">
-					<input type="checkbox" name="check_{{ attribute(aAlpha, i) }}" {% if switch.config|slice(i +4, 1) == 1 %}checked{% endif %} />
-				</div>
-			</td>
 		</tr>
 		{% endfor %}
 		<!-- /New/Edit -->
 		</table>
+		
 		
 		<input type="submit" name="send" value="{{ app.i18n.labels.save }}" class="btn btn-primary" style="float: left; margin-left: 10px;">
 

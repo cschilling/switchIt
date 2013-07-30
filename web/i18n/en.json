@@ -12,7 +12,8 @@
 		"delete":"Delete",
 		"add":"New",
 		"all":"All",
-		"dip":"DIP-Switches",
+		"dip":"DIP-Switches (groupcode)",
+		"switch_no":"Switch #",
 		"groups":"Groups",
 		"save":"Save",
 		"back":"Back",
@@ -24,11 +25,16 @@
 		"new_group":"Create group",
 		"new_cronjob":"Add Cronjob",
 		"all_group":"Whole group",
-		"language":"Language",
 		"servertime":"Servertime",
 		"weekdays":"Days of the week",
 		"switch_it":"Switch?",
-		"switch_to":"Switch to"
+		"switch_to":"Switch to",
+		"language":"Language",
+		"server":"Server",
+		"port":"Port",
+		"delay":"Delay",
+		"settings_upload":"import Backup",
+		"settings_download":"download Backup"
 	},
 
 	"titles": {
@@ -51,7 +57,9 @@
 	},
 
 	"text": {
-		"error":"Error"
+		"error":"Error",
+		"info":"Info",
+		"data_restored":"The backup has been restored"
 	},
 
 	"errors": {
@@ -60,6 +68,7 @@
 		"groupname_occupied":"This groupname is already in use",
 		"no_groups":"No group was found. Please add a group first",
 		"no_days_selected":"You need to select at least 1 day of the week when the cronjob should be fired",
-		"no_switches_selected":"You need to select at least 1 switch that should be switched by the cronjob"
+		"no_switches_selected":"You need to select at least 1 switch that should be switched by the cronjob",
+		"datafile_invalid":"The given file does not contain a valid backup"
 	}
 }
