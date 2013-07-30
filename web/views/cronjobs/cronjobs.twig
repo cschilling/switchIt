@@ -18,7 +18,23 @@
 					</a>
 				</td>
 				<td>
-					<span style="font-size: 14pt;">{{ cronjob.name }}</span>
+					<p>
+						<span style="margin-right: 10px;">{% if (cronjob.time // 60)|length < 2 %}0{% endif %}{{ cronjob.time // 60 }}:{% if (cronjob.time % 60)|length < 2 %}0{% endif %}{{ cronjob.time % 60 }} Uhr</span>
+						<span style="font-size: 14pt;">{{ cronjob.name }}</span>
+					</p>
+					
+					<p>
+						{% for i in 0..6 %}
+							{% if cronjob.days|slice(i, 1) == 1 %}
+								<span class="badge" style="background-color: green;">{{ attribute(app.i18n.days, i+1) }}</span>
+							{% else %}
+								<span class="badge">{{ attribute(app.i18n.days, i+1) }}</span>
+							{% endif %}
+						{% endfor %}
+					</p>
+					
+					
+					
 				</td>
 				<td style="width: 70px;">
 					<a href="{{ path('cron-delete', {'id': key}) }}" class="btn btn-danger text-right" style="float: right;">

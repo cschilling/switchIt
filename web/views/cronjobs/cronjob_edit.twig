@@ -27,8 +27,8 @@
 				<label for="time">{{ app.i18n.labels.time }}</label>
 			</td>
 			<td>
-				<input type="number" min="0" max="23" name="time_hour" value="12" id="name" class="form-control" autocomplete="off" style="width: 90px;" />:
-				<input type="number" min="0" max="59" name="time_minute" value="00" id="name" class="form-control" autocomplete="off" style="width: 90px;" />
+				<input type="number" min="0" max="23" name="time_hour" value="{% if (cronjob.time // 60)|length < 2 %}0{% endif %}{{ cronjob.time // 60 }}" id="name" class="form-control" autocomplete="off" style="width: 90px;" />:
+				<input type="number" min="0" max="59" name="time_minute" value="{% if (cronjob.time % 60)|length < 2 %}0{% endif %}{{ cronjob.time % 60 }}" id="name" class="form-control" autocomplete="off" style="width: 90px;" />
 			</td>
 		</tr>
 		</table>
@@ -37,21 +37,47 @@
 		<legend>{{ app.i18n.labels.weekdays }}</legend>
 
 		<table class="table table-striped">
-		
+
 		<!-- New/Edit -->
-		
+
 		{% for key, i in app.i18n.days %}
-		<tr>
-			<td>
-				<div class="switch" data-on="success" data-on-label="{{ i }}" data-off="danger" data-off-label="{{ i }}">
-					<input type="checkbox" name="day_{{ key }}" />
-				</div>
-			</td>
-		</tr>
+		<div class="switch" data-on="success" data-on-label="{{ i }}" data-off="danger" data-off-label="{{ i }}" style="margin: 5px; float: left;">
+			<input type="checkbox" name="day_{{ key }}" {% if cronjob.days|slice(key -1, 1) == 1 %}checked{% endif %} />
+		</div>
 		{% endfor %}
 		<!-- /New/Edit -->
 		</table>
-		
+
+		<legend>{{ app.i18n.labels.switch }}</legend>
+
+		<table class="table table-striped">
+			{% for gKey, group in app.data.aFilledGroups %}
+				<tr>
+					<th><h4>{{ group }}</h4></th>
+					<th>{{ app.i18n.labels.switch_it }}</th>
+					<th>{{ app.i18n.labels.switch_to }}</th>
+				</tr>
+
+				{% for key, switch in app.data.switches|sort if switch.group == gKey %}
+					<tr>
+						<td style="padding-left: 20px;">
+							<span style="font-size: 14pt;">{{ switch.name }}</span>
+						</td>
+						<td style="width: 30px;">
+							<div class="switch" data-on="success" data-on-label="{{ app.i18n.labels.yes }}" data-off="danger" data-off-label="{{ app.i18n.labels.no }}">
+								<input type="checkbox" name="switch_{{ key }}"{% if key in cronjob.switches|keys %} checked{% endif %} />
+							</div>
+						</td>
+						<td style="width: 70px;">
+							<div class="switch" data-on="success" data-on-label="{{ app.i18n.labels.on }}" data-off="danger" data-off-label="{{ app.i18n.labels.off }}">
+								<input type="checkbox" name="set_switch_{{ key }}"{% if key in cronjob.switches|keys and attribute(cronjob.switches, key) == 1 %} checked{% endif %} />
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			{% endfor %}
+		</table>
+
 		<input type="submit" name="send" value="{{ app.i18n.labels.save }}" class="btn btn-primary" style="float: left; margin-left: 10px;">
 
 		<a href="{{ path('cron') }}" class="btn btn-danger" style="float: right; margin-right: 10px;">

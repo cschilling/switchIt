@@ -6,6 +6,8 @@
 	"labels": {
 		"on":"An",
 		"off":"Aus",
+		"yes":"Ja",
+		"no":"Nein",
 		"edit":"\u00c4ndern",
 		"delete":"L\u00f6schen",
 		"add":"Neu",
@@ -24,7 +26,9 @@
 		"all_group":"Gesamte Gruppe",
 		"language":"Sprache",
 		"servertime":"Serverzeit",
-		"weekdays":"Wochentage"
+		"weekdays":"Wochentage",
+		"switch_it":"Schalten?",
+		"switch_to":"Schalten auf"
 	},
 
 	"titles": {
@@ -54,6 +58,8 @@
 		"no_name_given":"Der Name muss min. 3 Zeichen lang sein",
 		"group_not_empty":"Gruppe kann nicht gel\u00f6scht werden. Der Gruppe sind noch Schalter zugeordnet. Sie m\u00fcssen diesen Schaltern zuerst eine andere Gruppe zuweisen",
 		"groupname_occupied":"Dieser Gruppenname existiert bereits",
-		"no_groups":"Es wurde noch keine Gruppe angelegt. Bitte min. eine Gruppe erstellen"
+		"no_groups":"Es wurde noch keine Gruppe angelegt. Bitte min. eine Gruppe erstellen",
+		"no_days_selected":"Es muss min. ein Wochentag ausgew\u00e4hlt werden",
+		"no_switches_selected":"Es muss min. ein Schalter geschaltet werden"
 	}
 }

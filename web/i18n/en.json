@@ -6,6 +6,8 @@
 	"labels": {
 		"on":"On",
 		"off":"Off",
+		"yes":"Yes",
+		"no":"No",
 		"edit":"Edit",
 		"delete":"Delete",
 		"add":"New",
@@ -24,7 +26,9 @@
 		"all_group":"Whole group",
 		"language":"Language",
 		"servertime":"Servertime",
-		"weekdays":"Days of the week"
+		"weekdays":"Days of the week",
+		"switch_it":"Switch?",
+		"switch_to":"Switch to"
 	},
 
 	"titles": {
@@ -54,6 +58,8 @@
 		"no_name_given":"Name has to be at least 3 chars long",
 		"group_not_empty":"Group cannot be deleted. There are switches that are bound to this group. Change their groupbinding first",
 		"groupname_occupied":"This groupname is already in use",
-		"no_groups":"No group was found. Please add a group first"
+		"no_groups":"No group was found. Please add a group first",
+		"no_days_selected":"You need to select at least 1 day of the week when the cronjob should be fired",
+		"no_switches_selected":"You need to select at least 1 switch that should be switched by the cronjob"
 	}
 }
