@@ -1,7 +1,7 @@
 <?php
-	include("switch.php");
+	include(__DIR__."/switch.php");
 	
-	$aData = json_decode(file_get_contents("data.json"), true);
+	$aData = json_decode(file_get_contents(__DIR__."/data.json"), true);
 	$time  = (date('H') * 60) + (date('i'));
 
 	foreach($aData['cronjobs'] AS $cron)
