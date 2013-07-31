@@ -85,7 +85,7 @@
 				type: "post",
 				data: "&switchOn="+switchOn+"&switchId="+switchId+"&groupId="+groupId+"&all="+all,
 				success: function(){},
-				error:function(){}   
+				error:function(request, status, error){ alert(request.responseText); }   
 			}); 
 		}
 	</script>

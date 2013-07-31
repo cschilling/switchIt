@@ -44,35 +44,67 @@ $app->get('/about', function() use ($app) {
 
 $app->post('/switch', function (Request $request) use ($app, $dataFile) {
 
-	$aToSwitch = array();
+	$aSwitchTmp = array();
 	
 	if (!is_null($request->get('switchId')) && $request->get('switchId') > 0)
 	{
-		$aToSwitch = array(0 => $request->get('switchId'));
+		$aSwitchTmp = array(0 => $request->get('switchId'));
 	}
 	elseif (!is_null($request->get('groupId')) && $request->get('groupId') > 0)
 	{
 		foreach($app['data']['switches'] AS $switchKey => $switch)
 		{
 			if ($switch['group'] == $request->get('groupId'))
-				$aToSwitch[] = $switchKey;
+				$aSwitchTmp[] = $switchKey;
 		}
 	}
 	elseif (!is_null($request->get('all')) && $request->get('all') > 0)
 	{
 		foreach($app['data']['switches'] AS $switchKey => $switch)
-			$aToSwitch[] = $switchKey;
+			$aSwitchTmp[] = $switchKey;
 	}
 
+	$aToSwitch = array();
+	foreach($aSwitchTmp AS $switchKey)
+	{
+		$switch = $app['data']['switches'][$switchKey];
+
+		$aToSwitch[] = $switch['config'].' '.(int)$switch['number'].' '.(int)$request->get('switchOn');
+	}
+
+	file_put_contents('switch.json', json_encode($aToSwitch));
+
+
+	/*
 	$switchIt = new switchIt();
+
+	$result = $switchIt->connect($app['data']['options']['server'], $app['data']['options']['port']);
+
+	file_put_contents('switch.log', json_encode($aToSwitch)."\n", FILE_APPEND);
+
+	if ($result !== true)
+		return new Response($result, 400);
 
 	foreach($aToSwitch AS $switchKey)
 	{
 		$switch = $app['data']['switches'][$switchKey];
-		
+
+		file_put_contents('switch.log', $switchKey." -> ".$switch['config'].$switch['number'].$request->get('switchOn')."\n", FILE_APPEND);
+
 		// switch it!
-		$switchIt->doSwitch($switch['config'], $switch['number'], $request->get('switchOn'), $app['data']['options']['delay'], $app['data']['options']['server'], $app['data']['options']['port']);
+		$result = $switchIt->doSwitch($switch['config'], $switch['number'], $request->get('switchOn'), $app['data']['options']['delay']);
+		
+		if ($result !== true)
+		{
+			file_put_contents('switch.log', "Error: ".$result."\n", FILE_APPEND);
+			return new Response($result, 400);
+		}
 	}
+
+	file_put_contents('switch.log', "---\n\n", FILE_APPEND);
+
+	$switchIt->disconnect();
+	*/
 
 	return true;
 
