@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 $dataFile = __DIR__.'/data.json';
 
 $app            = new Silex\Application();
-$app['debug']   = true;
+$app['debug']   = false;
 $app['title']   = 'SwitchIt';
 $app['version'] = '0.9';
 
@@ -15,7 +15,7 @@ $app['version'] = '0.9';
 $app['data']  = fetchData($dataFile);
 
 // load i18n
-$app['i18n']  = json_decode(file_get_contents(__DIR__.'/i18n/'.$app['data']['options']['locale'].'.json'), true);
+$app['i18n']  = json_decode(file_get_contents(__DIR__.'/../i18n/'.$app['data']['options']['locale'].'.json'), true);
 
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
@@ -80,7 +80,7 @@ $app->post('/switch', function (Request $request) use ($app, $dataFile) {
 
 $app->get('/settings', function() use ($app) {
 
-	$dir = __DIR__.'/i18n';
+	$dir = __DIR__.'/../i18n';
 	$dh  = opendir($dir);
 	while (false !== ($filename = readdir($dh)))
 		$files[] = $filename;
@@ -93,7 +93,7 @@ $app->get('/settings', function() use ($app) {
 	{
 		if (strpos($file, '.json') !== false)
 		{
-			$fContent = json_decode(file_get_contents(__DIR__.'/i18n/'.$file), true);
+			$fContent = json_decode(file_get_contents($dir.'/'.$file), true);
 
 			if (isset($fContent['locale']))
 				$aLangFiles[substr($file, 0, -5)] = $fContent['locale'];
