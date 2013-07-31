@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
 
-include("switch.php");
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -72,41 +70,10 @@ $app->post('/switch', function (Request $request) use ($app, $dataFile) {
 		$aToSwitch[] = $switch['config'].' '.(int)$switch['number'].' '.(int)$request->get('switchOn');
 	}
 
-	file_put_contents('switch.json', json_encode($aToSwitch));
-
-
-	/*
-	$switchIt = new switchIt();
-
-	$result = $switchIt->connect($app['data']['options']['server'], $app['data']['options']['port']);
-
-	file_put_contents('switch.log', json_encode($aToSwitch)."\n", FILE_APPEND);
-
-	if ($result !== true)
-		return new Response($result, 400);
-
-	foreach($aToSwitch AS $switchKey)
-	{
-		$switch = $app['data']['switches'][$switchKey];
-
-		file_put_contents('switch.log', $switchKey." -> ".$switch['config'].$switch['number'].$request->get('switchOn')."\n", FILE_APPEND);
-
-		// switch it!
-		$result = $switchIt->doSwitch($switch['config'], $switch['number'], $request->get('switchOn'), $app['data']['options']['delay']);
-		
-		if ($result !== true)
-		{
-			file_put_contents('switch.log', "Error: ".$result."\n", FILE_APPEND);
-			return new Response($result, 400);
-		}
-	}
-
-	file_put_contents('switch.log', "---\n\n", FILE_APPEND);
-
-	$switchIt->disconnect();
-	*/
-
-	return true;
+	if (file_put_contents('switch.json', json_encode($aToSwitch)))
+		return true;
+	else
+		return $app['i18n']['errors']['switches_not_set'];
 
 })->bind('switch-it');
 
@@ -141,7 +108,7 @@ $app->post('/settings/save', function (Request $request) use ($app, $dataFile) {
 
 	// save settings
 	$aData = $app['data'];
-	
+
 	if (!is_null($request->files->get('file')))
 	{
 		$fContent = json_decode(file_get_contents($request->files->get('file')), true);
@@ -167,15 +134,12 @@ $app->post('/settings/save', function (Request $request) use ($app, $dataFile) {
 				'short' => $app['i18n']['text']['error'],
 				'ext'   => $app['i18n']['errors']['datafile_invalid'],
 			));
-			
+
 			return $app->redirect($app['url_generator']->generate('settings'));
 		}
 	}
 
 	$aData['options']['locale'] = $request->get('locale');
-	$aData['options']['server'] = $request->get('server');
-	$aData['options']['port']   = $request->get('port');
-	$aData['options']['delay']  = $request->get('delay');
 
 	saveData($aData, $dataFile);
 
@@ -526,16 +490,6 @@ function fetchData($file)
 	
 	if (!isset($aData['options']['locale']))
 		$aData['options']['locale'] = 'en';
-	
-	if (!isset($aData['options']['server']))
-		$aData['options']['server'] = '127.0.0.1';
-	
-	if (!isset($aData['options']['port']))
-		$aData['options']['port'] = '11337';
-		
-	if (!isset($aData['options']['delay']))
-		$aData['options']['delay'] = '0';
-
 
 	if (!isset($aData['cronjobs']))
 		$aData['cronjobs'] = array();

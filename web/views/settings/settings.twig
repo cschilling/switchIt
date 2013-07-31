@@ -21,30 +21,6 @@
 		</tr>
 		<tr>
 			<td style="width: 90px;">
-				<label for="server">{{ app.i18n.labels.server }}</label>
-			</td>
-			<td>
-				<input type="text" id="server" name="server" value="{{ app.data.options.server }}" class="form-control">
-			</td>
-		</tr>
-		<tr>
-			<td style="width: 90px;">
-				<label for="port">{{ app.i18n.labels.port }}</label>
-			</td>
-			<td>
-				<input type="number" id="port" name="port" value="{{ app.data.options.port }}" class="form-control">
-			</td>
-		</tr>
-		<tr>
-			<td style="width: 90px;">
-				<label for="delay">{{ app.i18n.labels.delay }}</label>
-			</td>
-			<td>
-				<input type="number" id="delay" name="delay" value="{{ app.data.options.delay }}" class="form-control">
-			</td>
-		</tr>
-		<tr>
-			<td style="width: 90px;">
 				<label for="file">
 					{{ app.i18n.labels.settings_upload }}
 				</label>
@@ -67,10 +43,10 @@
 		</tr>
 		</table>
 
-		
+
 		<input type="submit" name="send" value="{{ app.i18n.labels.save }}" class="btn btn-primary" style="float: left; margin-left: 10px;">
 
-		<a href="{{ path('groups') }}" target="_new" class="btn btn-danger" style="float: right; margin-right: 10px;">
+		<a href="{{ path('home') }}" class="btn btn-danger" style="float: right; margin-right: 10px;">
 			{{ app.i18n.labels.back }}
 		</a>
 

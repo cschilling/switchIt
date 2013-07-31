@@ -30,9 +30,6 @@
 		"switch_it":"Schalten?",
 		"switch_to":"Schalten auf",
 		"language":"Sprache",
-		"server":"Server",
-		"port":"Port",
-		"delay":"Delay",
 		"settings_upload":"Backup importieren",
 		"settings_download":"Backup herunterladen"
 	},
@@ -69,6 +66,7 @@
 		"no_groups":"Es wurde noch keine Gruppe angelegt. Bitte min. eine Gruppe erstellen",
 		"no_days_selected":"Es muss min. ein Wochentag ausgew\u00e4hlt werden",
 		"no_switches_selected":"Es muss min. ein Schalter geschaltet werden",
-		"datafile_invalid":"Die angegebene Datei ist kein g\u00fcltiges Backup"
+		"datafile_invalid":"Die angegebene Datei ist kein g\u00fcltiges Backup",
+		"switches_not_set":"Schalter konnte(n) nicht gesetzt werden"
 	}
 }

@@ -30,9 +30,6 @@
 		"switch_it":"Switch?",
 		"switch_to":"Switch to",
 		"language":"Language",
-		"server":"Server",
-		"port":"Port",
-		"delay":"Delay",
 		"settings_upload":"import Backup",
 		"settings_download":"download Backup"
 	},
@@ -69,6 +66,7 @@
 		"no_groups":"No group was found. Please add a group first",
 		"no_days_selected":"You need to select at least 1 day of the week when the cronjob should be fired",
 		"no_switches_selected":"You need to select at least 1 switch that should be switched by the cronjob",
-		"datafile_invalid":"The given file does not contain a valid backup"
+		"datafile_invalid":"The given file does not contain a valid backup",
+		"switches_not_set":"Switches could not be set"
 	}
 }
