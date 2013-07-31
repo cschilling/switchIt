@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__.'/../vendor/autoload.php';
 
 include("switch.php");
@@ -9,9 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 $dataFile = __DIR__.'/data.json';
 
-$app          = new Silex\Application();
-$app['debug'] = true;
-$app['title'] = 'RaspSwitcher v0.9';
+$app            = new Silex\Application();
+$app['debug']   = true;
+$app['title']   = 'SwitchIt';
+$app['version'] = '0.9';
 
 // load Data from file
 $app['data']  = fetchData($dataFile);
@@ -63,17 +63,19 @@ $app->post('/switch', function (Request $request) use ($app, $dataFile) {
 		foreach($app['data']['switches'] AS $switchKey => $switch)
 			$aToSwitch[] = $switchKey;
 	}
-	
+
+	$switchIt = new switchIt();
+
 	foreach($aToSwitch AS $switchKey)
 	{
 		$switch = $app['data']['switches'][$switchKey];
-
+		
 		// switch it!
-		do_switch($switch['config'], $switch['number'], $request->get('switchOn'), $app['data']['options']['delay'], $app['data']['options']['server'], $app['data']['options']['port']);
+		$switchIt->doSwitch($switch['config'], $switch['number'], $request->get('switchOn'), $app['data']['options']['delay'], $app['data']['options']['server'], $app['data']['options']['port']);
 	}
-	
+
 	return true;
-	
+
 })->bind('switch-it');
 
 
