@@ -15,7 +15,7 @@
 ### END INIT INFO
 
 PATH=/sbin:/bin:/usr/bin
-DIR=${PWD}
+DIR="/var/www/switchIt/src/switchIt/daemon"
 NAME="switchIt_daemon.php"
 BIN="$DIR/$NAME"
 RUNAS="root"
