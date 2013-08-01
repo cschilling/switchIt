@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+	{% if id == 0 %}
+		{% set switch = {"name": "", "group": 0, "config": "00000", "number": "1"} %}
+	{% else %}
+		{% set switch = app.data.switches[id] %}
+	{% endif %}
+
+	<form method="POST" action="{{ path('switch-save') }}">
+		<input type="hidden" name="id" value="{{ id }}" />
+
+		<legend>{% if id == 0 %} {{ app.i18n.titles.add_switch }} {% else %} {{ app.i18n.titles.edit_switch }} {% endif %} </legend>
+
+		<table class="table table-striped">
+		<tr>
+			<td style="width: 100px;">
+				<label for="name">{{ app.i18n.labels.name }}</label>
+			</td>
+			<td>
+				<input type="text" name="name" value="{{ switch.name }}" id="name" class="form-control" autocomplete="off" />
+			</td>
+		</tr>
+
+		<tr>
+			<td style="width: 100px;">
+				<label for="group">{{ app.i18n.labels.group }}</label>
+			</td>
+			<td>
+				<select name="group" id="group" class="form-control">
+
+					{% for key,group in app.data.groups %}
+						<option value="{{ key }}"{% if key == switch.group %}selected{% endif %}>{{ group }}</option>
+					{% endfor %}
+
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<td style="width: 100px;">
+				<label for="number">{{ app.i18n.labels.switch_no }}</label>
+			</td>
+			<td>
+				<input type="number" min="1" max="99" id="number" name="number" value="{{ switch.number }}" class="form-control" style="width: 60px;" />
+			</td>
+		</tr>
+		
+		</table>
+
+
+		<legend>{{ app.i18n.labels.dip }}</legend>
+
+		<table class="table table-striped">
+
+		<!-- New/Edit -->
+		{% for i in 1..5 %}
+		<tr>
+			<td>
+				<div class="switch" data-on="success" data-on-label="{{ i }}" data-off="danger" data-off-label="{{ i }}">
+					<input type="checkbox" name="check_{{ i }}" {% if switch.config|slice(i -1, 1) == 1 %}checked{% endif %} />
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+		<!-- /New/Edit -->
+		</table>
+		
+		
+		<input type="submit" name="send" value="{{ app.i18n.labels.save }}" class="btn btn-primary" style="float: left; margin-left: 10px;">
+
+		<a href="{{ path('switches') }}" class="btn btn-danger" style="float: right; margin-right: 10px;">
+			{{ app.i18n.labels.back }}
+		</a>
+
+	</form>
+
+{% endblock %}
