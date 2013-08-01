@@ -3,7 +3,7 @@ require(__DIR__.'/../../../config/prod.php');
 
 if (!file_exists($dataFile))
 {
-	file_put_contents($logFile, date('Y-m-d H:i:s'." - Cronjob - DataFile not found in \"".$dataFile."\"\n"));
+	file_put_contents($logFile, date('Y-m-d H:i:s')." - Cronjob - DataFile not found in \"".$dataFile."\"\n", FILE_APPEND);
 	die;
 }
 
