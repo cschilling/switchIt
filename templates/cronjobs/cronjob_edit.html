@@ -3,10 +3,87 @@
 {% block body %}
 
 	{% if id == 0 %}
-		{% set cronjob = {"name": "", "time": 720, "days": "0000000", "switches": {}} %}
+		{% set cronjob = {"name": "", "type": 0, "offset": 0, "time": 720, "days": "0000000", "switches": {}} %}
 	{% else %}
 		{% set cronjob = app.data.cronjobs[id] %}
 	{% endif %}
+
+	<script type="text/javascript">
+
+		$.strPad = function(i,l,s) {
+			var o = i.toString();
+			if (!s) { s = '0'; }
+			while (o.length < l) {
+				o = s + o;
+			}
+			return o;
+		};
+
+		var sunrise = {{ sunrise }};
+		var sunset  = {{ sunset }};
+
+		$(function() {
+			switchType('{{ cronjob.type }}');
+		});
+
+		function switchType(val)
+		{
+			switch(val)
+			{
+				case '0':
+					$('.type_1').hide();
+					$('.type_2').hide();
+					$('.type_other').hide();
+
+					$('.type_0').show();
+					break;
+
+				case '1':
+					$('.type_0').hide();
+					$('.type_2').hide();
+
+					$('.type_1').show();
+					$('.type_other').show();
+					break;
+
+				case '2':
+					$('.type_0').hide();
+					$('.type_1').hide();
+
+					$('.type_2').show();
+					$('.type_other').show();
+					break;
+			}
+		}
+
+
+		function setTime(val)
+		{
+			var offset = ($('#time_offset').val() * 1);
+
+			if (val > 0)
+			{
+				offset++;
+			}
+			else
+			{
+				offset--;
+			}
+
+			if (offset > 0)
+			{
+				var prefix = '+';
+			}
+			else
+			{
+				var prefix = '';
+			}
+
+			$('#time_offset').val(offset);
+			$('#offset_counter').text(prefix+''+offset);
+		}
+
+	</script>
 
 	<form method="POST" action="{{ path('cron-save') }}" class="form-inline">
 		<input type="hidden" name="id" value="{{ id }}" />
@@ -15,23 +92,70 @@
 
 		<table class="table table-striped">
 		<tr>
-			<td style="width: 70px;">
+			<td style="width: 90px;">
 				<label for="name">{{ app.i18n.labels.name }}</label>
 			</td>
 			<td>
 				<input type="text" name="name" value="{{ cronjob.name }}" id="name" class="form-control" autocomplete="off" />
 			</td>
 		</tr>
+
 		<tr>
-			<td style="width: 70px;">
-				<label for="time">{{ app.i18n.labels.time }}</label>
+			<td style="width: 90px;">
+				<label for="type">{{ app.i18n.labels.type }}</label>
 			</td>
 			<td>
-				<input type="number" min="0" max="23" name="time_hour" value="{% if (cronjob.time // 60)|length < 2 %}0{% endif %}{{ cronjob.time // 60 }}" id="name" class="form-control" autocomplete="off" style="width: 90px;" />:
-				<input type="number" min="0" max="59" name="time_minute" value="{% if (cronjob.time % 60)|length < 2 %}0{% endif %}{{ cronjob.time % 60 }}" id="name" class="form-control" autocomplete="off" style="width: 90px;" />
+				<select name="type" id="type" class="form-control" onchange="switchType(this.options[this.selectedIndex].value);">
+					<option value="0"{% if cronjob.type == 0 %} selected{% endif %}>{{ app.i18n.labels.time }}</option>
+					<option value="1"{% if cronjob.type == 1 %} selected{% endif %}>{{ app.i18n.labels.sunrise }}</option>
+					<option value="2"{% if cronjob.type == 2 %} selected{% endif %}>{{ app.i18n.labels.sunset }}</option>
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<td style="width: 130px;">
+				<label for="time" class="type_0">{{ app.i18n.labels.time }}</label>
+			</td>
+			<td>
+				<div class="type_0" style="display: inline;">
+					<input type="number" min="0" max="23" name="time_hour" value="{% if (cronjob.time // 60)|length < 2 %}0{% endif %}{{ cronjob.time // 60 }}" id="time" class="form-control" autocomplete="off" style="width: 90px;" />:
+					<input type="number" min="0" max="59" name="time_minute" value="{% if (cronjob.time % 60)|length < 2 %}0{% endif %}{{ cronjob.time % 60 }}" id="time_minute" class="form-control" autocomplete="off" style="width: 90px;" />
+				</div>
 			</td>
 		</tr>
 		</table>
+
+		<div class="type_other">
+
+			<legend>
+				{{ app.i18n.labels.offset }}
+			</legend>
+
+			<p>
+				{{ app.i18n.text.sunrise_sunset }}
+			</p>
+
+			<div style="text-align: center; margin-bottom: 20px;">
+
+				<input type="hidden" id="time_offset" name="offset" value="{% if cronjob.offset %}{{ cronjob.offset }}{% else %}0{% endif %}" onchange="setTime(this.value)" class="form-control type_other" autocomplete="off" style="width: 90px;" />
+
+				<span type="button" class="btn btn-primary btn-large" disabled="disabled">
+					<span class="type_1 sunrise-time">{{ sunrise|date('d.m.Y H:i') }}</span>
+					<span class="type_2 sunset-time">{{ sunset|date('d.m.Y H:i') }}</span> {{ app.i18n.labels.o_clock }}
+				</span>
+
+				<br />
+
+				<span type="button" class="btn btn-success" style="margin-top: 5px; padding-left: 20px; padding-right: 20px;" onclick="setTime('-1');">-</span>
+
+				<div class="btn btn-primary" id="offset_show" style="margin-top: 5px;" disabled="disabled">
+					<span id="offset_counter">{% if cronjob.offset %}{{ cronjob.offset }}{% else %}0{% endif %}</span> {{ app.i18n.labels.minutes }}
+				</div>
+
+				<span type="button" class="btn btn-danger" style="margin-top: 5px; padding-left: 20px; padding-right: 20px;" onclick="setTime('1');">+</span>
+			</div>
+		</div>
 
 
 		<legend>{{ app.i18n.labels.weekdays }}</legend>

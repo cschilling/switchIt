@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Silex\ControllerProviderInterface;
 use SwitchIt\Data;
+use GoogleAPI\Maps;
 
 
 class SettingsControllerProvider implements ControllerProviderInterface
@@ -96,6 +97,26 @@ class SettingsControllerProvider implements ControllerProviderInterface
 			return $app->redirect($app['url_generator']->generate('settings'));
 
 		})->bind('settings-save');
+
+		/**
+		 * save new location
+		 *
+		 */
+		$controllers->post('/location/save', function (Application $app, Request $request) {
+
+			// save settings
+			$aData = $app['data'];
+
+			$aData['options']['location'] = Maps::getLocationData($request->get('address'));
+
+			$data = new Data($app['dataFile']);
+			$data->saveData($aData);
+
+			$app['data'] = $data->fetchData();
+
+			return $app->redirect($app['url_generator']->generate('settings'));
+
+		})->bind('settings-location-save');
 
 
 		/**

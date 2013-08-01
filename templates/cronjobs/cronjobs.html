@@ -4,7 +4,7 @@
 
 	<div style="text-align: center;">
 		<h4>{{ app.i18n.labels.servertime }}</h4>
-		<span type="button" class="btn btn-primary btn-large" disabled="disabled"><span id="Uhrzeit"></span> Uhr</span>
+		<span type="button" class="btn btn-primary btn-large" disabled="disabled"><span id="Uhrzeit"></span> {{ app.i18n.labels.o_clock }}</span>
 	</div>
 
 	<legend>{{ app.i18n.titles.cronjobs }}</legend>
@@ -19,7 +19,16 @@
 				</td>
 				<td>
 					<p>
-						<span style="margin-right: 10px;">{% if (cronjob.time // 60)|length < 2 %}0{% endif %}{{ cronjob.time // 60 }}:{% if (cronjob.time % 60)|length < 2 %}0{% endif %}{{ cronjob.time % 60 }} Uhr</span>
+						{% if cronjob.type == 0 %}
+							<span style="margin-right: 10px;">{% if (cronjob.time // 60)|length < 2 %}0{% endif %}{{ cronjob.time // 60 }}:{% if (cronjob.time % 60)|length < 2 %}0{% endif %}{{ cronjob.time % 60 }} {{ app.i18n.labels.o_clock }}</span>
+						{% else %}
+							<span class="glyphicon glyphicon-collapse{% if cronjob.type == 1 %}-top{% endif %}" style="color: orange;"></span>
+
+							{% if cronjob.offset != 0 %}{% if cronjob.offset > 0 %}+{% endif %}{{ cronjob.offset }} {{ app.i18n.labels.min_short }}{% endif %}
+						{% endif %}
+
+
+
 						<span style="font-size: 14pt;">{{ cronjob.name }}</span>
 					</p>
 					

@@ -25,8 +25,6 @@ class Data
 	 */
 	public function fetchData()
 	{
-
-
 		$aData = json_decode(file_get_contents($this->dataFile), true);
 
 		if (isset($aData['groups']))

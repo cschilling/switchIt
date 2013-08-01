@@ -32,7 +32,19 @@
 		"language":"Language",
 		"download":"Download",
 		"settings_upload":"import Backup",
-		"settings_download":"download Backup"
+		"settings_download":"download Backup",
+		"your_location":"Your Location",
+		"town":"Your town",
+		"current_town":"Town set",
+		"type":"Type",
+	  "time":"time",
+	  "sunrise":"sunrise",
+	  "sunset":"sunset",
+	  "today":"today",
+		"offset":"Add an offset",
+	  "minutes":"minutes",
+	  "min_short":"min",
+	  "o_clock":"o'clock"
 	},
 
 	"titles": {
@@ -57,7 +69,9 @@
 	"text": {
 		"error":"Error",
 		"info":"Info",
-		"data_restored":"The backup has been restored"
+		"data_restored":"The backup has been restored",
+	  "location_info":"Will be used to calculate the sunrise and sunset of your location",
+	  "sunrise_sunset":"here you can add an offset to the sunrise/sunset time"
 	},
 
 	"errors": {

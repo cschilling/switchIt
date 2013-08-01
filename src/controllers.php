@@ -14,6 +14,11 @@ $app['data']       = $data->fetchData();
 $app['dataFile']   = $dataFile;
 $app['switchFile'] = $switchFile;
 
+// set timezone
+if (isset($app['data']) && isset($app['data']['options']) && isset($app['data']['options']['location']) &&  isset($app['data']['options']['location']['timezone']))
+	date_default_timezone_set($app['data']['options']['location']['timezone']);
+
+
 // load i18n
 $app['i18n']  = json_decode(file_get_contents(__DIR__.'/../i18n/'.$app['data']['options']['locale'].'.json'), true);
 

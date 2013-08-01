@@ -30,7 +30,13 @@ class CronjobControllerProvider implements ControllerProviderInterface
 		 *
 		 */
 		$controllers->get('/new', function(Application $app) {
-			return $app['twig']->render('cronjobs/cronjob_edit.html', array('id' => 0));
+
+			$location = $app['data']['options']['location'];
+
+			$sunrise = date_sunrise(time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+			$sunset  = date_sunset (time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+
+			return $app['twig']->render('cronjobs/cronjob_edit.html', array('id' => 0, 'sunrise' => $sunrise, 'sunset' => $sunset));
 		})->bind('cron-new');
 
 
@@ -39,7 +45,13 @@ class CronjobControllerProvider implements ControllerProviderInterface
 		 *
 		 */
 		$controllers->get('/edit/{id}', function(Application $app, $id) {
-			return $app['twig']->render('cronjobs/cronjob_edit.html', array('id' => $id));
+
+			$location = $app['data']['options']['location'];
+
+			$sunrise = date_sunrise(time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+			$sunset  = date_sunset (time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+
+			return $app['twig']->render('cronjobs/cronjob_edit.html', array('id' => $id, 'sunrise' => $sunrise, 'sunset' => $sunset));
 		})->bind('cron-edit');
 
 
@@ -93,6 +105,8 @@ class CronjobControllerProvider implements ControllerProviderInterface
 			$aCronjob['name']     = $request->get('name');
 			$aCronjob['time']     = (((int)$request->get('time_hour') * 60) + (int)$request->get('time_minute'));
 			$aCronjob['days']     = $days;
+			$aCronjob['type']     = (int)$request->get('type');
+			$aCronjob['offset']   = (int)$request->get('offset');
 			$aCronjob['switches'] = $aToSwitch;
 
 

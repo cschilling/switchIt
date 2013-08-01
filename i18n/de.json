@@ -32,7 +32,19 @@
 		"language":"Sprache",
 		"download":"Herunterladen",
 		"settings_upload":"Backup importieren",
-		"settings_download":"Backup herunterladen"
+		"settings_download":"Backup herunterladen",
+		"your_location":"Ihr Standort",
+		"town":"Ihre Stadt",
+		"current_town":"Stadt",
+		"type":"Typ",
+	  "time":"Zeit",
+	  "sunrise":"Sonnenaufgang",
+	  "sunset":"Sonnenuntergang",
+	  "today":"heute",
+		"offset":"Feintuning",
+	  "minutes":"Minuten",
+	  "min_short":"Min.",
+	  "o_clock":"Uhr"
 	},
 
 	"titles": {
@@ -57,7 +69,9 @@
 	"text": {
 		"error":"Fehler",
 		"info":"Info",
-		"data_restored":"Die Daten des Backups wurden wiederhergestellt"
+		"data_restored":"Die Daten des Backups wurden wiederhergestellt",
+	  "location_info":"Wird genutzt um den Zeitpunkt des Sonnenauf- & untergangs zu berechnen",
+		"sunrise_sunset":"Hier kann der Sonnenauf- bzw. untergang noch genauer eingestellt werden. Der Wert wird automatisch jeden Tag neu ermittelt"
 	},
 
 	"errors": {

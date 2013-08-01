@@ -2,6 +2,47 @@
 
 {% block body %}
 
+	<form method="POST" action="{{ path('settings-location-save') }}">
+
+		<legend>{{ app.i18n.labels.your_location }}</legend>
+
+		<p style="padding-left: 10px;">
+			{{ app.i18n.text.location_info }}
+		</p>
+
+		<table class="table table-striped">
+		<tr>
+			<td style="width: 100px;">
+				<label for="address">
+					{{ app.i18n.labels.town }}
+				</label>
+			</td>
+			<td>
+				<input type="text" id="address" name="address" value="" class="form-control" autocomplete="off">
+			</td>
+			<td style="width: 100px;">
+				<input type="submit" name="search" value="{{ app.i18n.labels.save }}" class="btn btn-primary" style="float: left; margin-left: 10px;">
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 100px;">
+				<label>
+					{{ app.i18n.labels.current_town }}
+				</label>
+			</td>
+			<td colspan="2">
+				{% if app.data.options.location.name %}
+					{{ app.data.options.location.name }}<br />({{ app.data.options.location.lat }} / {{ app.data.options.location.lng }})<br />
+				{% else %}
+					no location set
+				{% endif %}
+			</td>
+		</tr>
+		</table>
+
+	</form>
+
+
 	<form method="POST" action="{{ path('settings-save') }}" enctype="multipart/form-data">
 
 		<legend>{{ app.i18n.nav.settings }}</legend>
@@ -19,6 +60,7 @@
 				</select>
 			</td>
 		</tr>
+
 		<tr>
 			<td style="width: 90px;">
 				<label for="file">
