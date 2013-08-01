@@ -10,8 +10,17 @@ switchIt is a webGui that uses the *raspberry-remote*-project to switch radio-co
 #### Installation ####
 1. go to the document root of your webserver (e.g. `cd /var/www`)
 1. `git clone git@git.sits-serv.de:cschilling/switchIt.git switchIt`
-1. `cd switchIt`
+1. `switchIt`
 1. `curl -sS https://getcomposer.org/installer | php`
 1. `php composer.phar install`
 1. `chown -R www-data:www-data /var/www/switchIt`
-1. `chmod +x src/SwitchIt/daemon/switchIt_daemon.init`
+1. `chmod +x src/SwitchIt/daemons/switchIt_daemon.init`
+1. `cd src/SwitchIt/daemons/`
+1. `ln -s /var/www/switchIt/src/SwitchIt/daemons/switchIt_daemon.init /etc/init.d/switchIt_daemon.init`
+1. install the daemon so it will be up and running after a reboot with `update-rc.d switchIt_daemon.init defaults`
+1. start the daemon `/etc/init.d/switchIt_daemon.init start`
+1. check, if the daemon is running `/etc/init.d/switchIt_daemon.init status`
+1. install the cronjob-watchdog by typing `crontab -e`
+1. add the line `  * *  *   *   *     php /var/www/switchIt/src/SwitchIt/daemons/cron.php`
+1. edit the file `/var/www/switchIt/config/prod.php` and check if the var `$sendBin` points to the send-binary of the *raspberry-remote*-project
+1. That's it!
