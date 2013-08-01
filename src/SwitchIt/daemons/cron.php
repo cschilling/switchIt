@@ -46,18 +46,30 @@ foreach($aData['cronjobs'] AS $cKey => $cron)
 			break;
 
 		case 1:
-			if ($sunrise !== false && ($sunrise + $cron['offset']) == $cron['time'])
+			if ($sunrise === false)
+				continue;
+
+			$sunriseTmp = $sunrise + $cron['offset'];
+			$sunriseTmp = $sunriseTmp % 1440;
+
+			if ($time == $sunriseTmp)
 				$run = true;
 			break;
 
 		case 2:
-			if ($sunset !== false && ($sunset + $cron['offset']) == $cron['time'])
+			if ($sunset === false)
+				continue;
+
+			$sunsetTmp = $sunset + $cron['offset'];
+			$sunsetTmp = $sunsetTmp % 1440;
+
+			if ($time == $sunsetTmp)
 				$run = true;
 	}
 
 	if ($run)
 	{
-		file_put_contents($logFile, date('Y-m-d H:i:s'." - Cronjob - executing Cronjob #".$cKey." \"(".$cron['name'].")\"\n"));
+		file_put_contents($logFile, date('Y-m-d H:i:s')." - Cronjob - executing Cronjob #".$cKey." \"(".$cron['name'].")\"\n", FILE_APPEND);
 
 		$aToSwitch = array();
 		foreach($cron['switches'] AS $switchKey => $action)
@@ -70,6 +82,6 @@ foreach($aData['cronjobs'] AS $cKey => $cron)
 		if (file_put_contents($switchFile, json_encode($aToSwitch)))
 			return true;
 		else
-			file_put_contents($logFile, date('Y-m-d H:i:s'." - Cronjob - could not write to file \"".$switchFile."\"\n"));
+			file_put_contents($logFile, date('Y-m-d H:i:s')." - Cronjob - could not write to file \"".$switchFile."\"\n", FILE_APPEND);
 	}
 }
