@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{% block title 'switchIt' %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<head>
+		<title>{% block title 'switchIt' %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="{{ app.request.basepath }}/favicon.ico" />
+		<link rel="apple-touch-icon" href="{{ app.request.basepath }}/touch-icon-iphone.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="{{ app.request.basepath }}/touch-icon-ipad.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="{{ app.request.basepath }}/touch-icon-iphone4.png" />
 
-    <link href="{{ app.request.basepath }}/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="{{ app.request.basepath }}/css/bootstrap-glyphicons.css" rel="stylesheet" media="screen">
-    <link href="{{ app.request.basepath }}/css/bootstrap-switch.css" rel="stylesheet" media="screen">
-	<script src="{{ app.request.basepath }}/js/jquery-1-10-2.min.js"></script>
-  </head>
-  <body>
-	<div style="margin-bottom: 60px;">
-		{% include 'nav.html' %}
-	</div>
-
-	{% block flash %}
-	{% if flash is defined %}
-		<div class="alert alert-{{ flash.type }}">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<strong>{{ flash.short }}:</strong>
-			{{ flash.ext }}
+		<link href="{{ app.request.basepath }}/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="{{ app.request.basepath }}/css/bootstrap-glyphicons.css" rel="stylesheet" media="screen">
+		<link href="{{ app.request.basepath }}/css/bootstrap-switch.css" rel="stylesheet" media="screen">
+		<script src="{{ app.request.basepath }}/js/jquery-1-10-2.min.js"></script>
+	</head>
+	<body>
+		<div style="margin-bottom: 60px;">
+			{% include 'nav.html' %}
 		</div>
-	{% endif %}
-	{% endblock %}
 
-	{% block body '' %}
+		{% block flash %}
+			{% if flash is defined %}
+				<div class="alert alert-{{ flash.type }}">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>{{ flash.short }}:</strong>
+					{{ flash.ext }}
+				</div>
+			{% endif %}
+		{% endblock %}
 
-    <script src="{{ app.request.basepath }}/js/bootstrap.min.js"></script>
-	<script src="{{ app.request.basepath }}/js/bootstrap-switch.min.js"></script>
-  </body>
+		{% block body '' %}
+
+		<script src="{{ app.request.basepath }}/js/bootstrap.min.js"></script>
+		<script src="{{ app.request.basepath }}/js/bootstrap-switch.min.js"></script>
+	</body>
 </html>
