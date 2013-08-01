@@ -46,12 +46,12 @@ foreach($aData['cronjobs'] AS $cKey => $cron)
 			break;
 
 		case 1:
-			if ($sunrise !== false && $sunrise == $cron['time'])
+			if ($sunrise !== false && ($sunrise + $cron['offset']) == $cron['time'])
 				$run = true;
 			break;
 
 		case 2:
-			if ($sunset !== false && $sunset == $cron['time'])
+			if ($sunset !== false && ($sunset + $cron['offset']) == $cron['time'])
 				$run = true;
 	}
 
