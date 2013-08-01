@@ -26,5 +26,5 @@ switchIt is a webGui that uses the *raspberry-remote*-project to switch radio-co
 1. That's it! Surf to `http://{IP_OF_YOUR_RASPBERRY}/switchIt/web`
 
 #### Troubeshooting ####
-If the webpage shows an *404* error, make sure that the `.htaccess`-file of switchIt is used by the webserver
-Open up the file `/etc/apache2/sites-available/default` and check that under the section `<Directory /var/www/>` `AllowOverride All` is set
+If the webpage shows an *404* error, make sure that the `.htaccess`-file of switchIt is used by the webserver.
+Open up the file `/etc/apache2/sites-available/default` and check that under the section `<Directory /var/www/>` `AllowOverride` is set to `All`
