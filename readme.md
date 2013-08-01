@@ -10,7 +10,7 @@ switchIt is a webGui that uses the *raspberry-remote*-project to switch radio-co
 #### Installation ####
 1. go to the document root of your webserver (e.g. `cd /var/www`)
 1. `git clone git@git.sits-serv.de:cschilling/switchIt.git switchIt`
-1. `switchIt`
+1. `cd switchIt`
 1. `curl -sS https://getcomposer.org/installer | php`
 1. `php composer.phar install`
 1. `chown -R www-data:www-data /var/www/switchIt`
