@@ -4,4 +4,4 @@
 $sendBin        = '/opt/raspberry-remote/send';
 $dataFile       = __DIR__.'/../data/data.json';
 $switchFile     = __DIR__.'/../data/toSwitch.json';
-$logFile        = __DIR__.'/../logs/switchIt.log';
+$logFile        = __DIR__.'/../log/switchIt.log';
