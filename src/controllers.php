@@ -37,6 +37,7 @@ $app->mount('/switch',   new c\SwitchControllerProvider());
 $app->mount('/group',    new c\GroupControllerProvider());
 $app->mount('/cronjob',  new c\CronjobControllerProvider());
 $app->mount('/settings', new c\SettingsControllerProvider());
+$app->mount('/api',      new c\ApiControllerProvider());
 
 
 $app->error(function (\Exception $e, $code) use ($app) {
