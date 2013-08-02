@@ -47,10 +47,10 @@ class CronjobControllerProvider implements ControllerProviderInterface
 			else
 				$locationIsSet = false;
 
-			$location = $app['data']['options']['location'];
-
 			if ($locationIsSet)
 			{
+				$location = $app['data']['options']['location'];
+
 				$sunrise = date_sunrise(time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
 				$sunset  = date_sunset (time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
 			}
@@ -70,12 +70,36 @@ class CronjobControllerProvider implements ControllerProviderInterface
 		 */
 		$controllers->get('/edit/{id}', function(Application $app, $id) {
 
-			$location = $app['data']['options']['location'];
+			if (!sizeof($app['data']['switches']))
+			{
+				$app['session']->set('flash', array(
+					'type'  => 'danger',
+					'short' => $app['i18n']['text']['error'],
+					'ext'   => $app['i18n']['errors']['no_switch'],
+				));
 
-			$sunrise = date_sunrise(time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
-			$sunset  = date_sunset (time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+				return $app->redirect($app['url_generator']->generate('switches'));
+			}
 
-			return $app['twig']->render('cronjobs/cronjob_edit.html', array('id' => $id, 'sunrise' => $sunrise, 'sunset' => $sunset));
+			if (isset($app['data']['options']['location']['lat']))
+				$locationIsSet = true;
+			else
+				$locationIsSet = false;
+
+			if ($locationIsSet)
+			{
+				$location = $app['data']['options']['location'];
+
+				$sunrise = date_sunrise(time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+				$sunset  = date_sunset (time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+			}
+			else
+			{
+				$sunrise = date('U', mktime (0, 0, 0));
+				$sunset  = date('U', mktime (0, 0, 0));
+			}
+
+			return $app['twig']->render('cronjobs/cronjob_edit.html', array('id' => $id, 'sunrise' => $sunrise, 'sunset' => $sunset, 'locationIsSet' => $locationIsSet));
 		})->bind('cron-edit');
 
 
@@ -107,6 +131,7 @@ class CronjobControllerProvider implements ControllerProviderInterface
 
 			$cronjobId = $request->get('id');
 			$aSwitches = $app['data']['switches'];
+			$aToSwitch = array();
 
 			// get switches that should be set
 			foreach($aSwitches AS $key => $switch)
