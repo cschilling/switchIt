@@ -71,14 +71,16 @@
 		"info":"Info",
 		"data_restored":"The backup has been restored",
 	  "location_info":"Will be used to calculate the sunrise and sunset of your location",
-	  "sunrise_sunset":"here you can add an offset to the sunrise/sunset time"
+	  "sunrise_sunset":"here you can add an offset to the sunrise/sunset time",
+	  "location_not_set":"You have to enter a location in the settings to switch by sunrise/sunset"
 	},
 
 	"errors": {
 		"no_name_given":"Name has to be at least 3 chars long",
 		"group_not_empty":"Group cannot be deleted. There are switches that are bound to this group. Change their groupbinding first",
 		"groupname_occupied":"This groupname is already in use",
-		"no_groups":"No group was found. Please add a group first",
+		"no_group":"No group was found. Please add a group first",
+		"no_switch":"No switch was found. Please add a switch first",
 		"no_days_selected":"You need to select at least 1 day of the week when the cronjob should be fired",
 		"no_switches_selected":"You need to select at least 1 switch that should be switched by the cronjob",
 		"datafile_invalid":"The given file does not contain a valid backup",

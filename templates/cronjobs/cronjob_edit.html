@@ -107,9 +107,15 @@
 			<td>
 				<select name="type" id="type" class="form-control" onchange="switchType(this.options[this.selectedIndex].value);">
 					<option value="0"{% if cronjob.type == 0 %} selected{% endif %}>{{ app.i18n.labels.time }}</option>
-					<option value="1"{% if cronjob.type == 1 %} selected{% endif %}>{{ app.i18n.labels.sunrise }}</option>
-					<option value="2"{% if cronjob.type == 2 %} selected{% endif %}>{{ app.i18n.labels.sunset }}</option>
+
+					{% if locationIsSet %}
+						<option value="1"{% if cronjob.type == 1 %} selected{% endif %}>{{ app.i18n.labels.sunrise }}</option>
+						<option value="2"{% if cronjob.type == 2 %} selected{% endif %}>{{ app.i18n.labels.sunset }}</option>
+					{% endif %}
 				</select>
+				{% if not locationIsSet %}
+					<br />{{ app.i18n.text.location_not_set }}
+				{% endif %}
 			</td>
 		</tr>
 
@@ -127,7 +133,6 @@
 		</table>
 
 		<div class="type_other">
-
 			<legend>
 				{{ app.i18n.labels.offset }}
 			</legend>

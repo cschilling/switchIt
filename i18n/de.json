@@ -71,14 +71,16 @@
 		"info":"Info",
 		"data_restored":"Die Daten des Backups wurden wiederhergestellt",
 	  "location_info":"Wird genutzt um den Zeitpunkt des Sonnenauf- & untergangs zu berechnen",
-		"sunrise_sunset":"Hier kann der Sonnenauf- bzw. untergang noch genauer eingestellt werden. Der Wert wird automatisch jeden Tag neu ermittelt"
+		"sunrise_sunset":"Hier kann der Sonnenauf- bzw. untergang noch genauer eingestellt werden. Der Wert wird automatisch jeden Tag neu ermittelt",
+	  "location_not_set":"Bitte hinterlegen Sie eine Stadt in den Einstellungen, um auch nach Sonnenauf- & untergang schalten zu können"
 	},
 
 	"errors": {
 		"no_name_given":"Der Name muss min. 3 Zeichen lang sein",
 		"group_not_empty":"Gruppe kann nicht gel\u00f6scht werden. Der Gruppe sind noch Schalter zugeordnet. Sie m\u00fcssen diesen Schaltern zuerst eine andere Gruppe zuweisen",
 		"groupname_occupied":"Dieser Gruppenname existiert bereits",
-		"no_groups":"Es wurde noch keine Gruppe angelegt. Bitte min. eine Gruppe erstellen",
+		"no_group":"Es wurde noch keine Gruppe angelegt. Bitte min. eine Gruppe erstellen",
+		"no_switch":"Es wurde noch keine Schalter angelegt. Bitte min. eineen Schalter erstellen",
 		"no_days_selected":"Es muss min. ein Wochentag ausgew\u00e4hlt werden",
 		"no_switches_selected":"Es muss min. ein Schalter geschaltet werden",
 		"datafile_invalid":"Die angegebene Datei ist kein g\u00fcltiges Backup",

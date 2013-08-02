@@ -31,12 +31,36 @@ class CronjobControllerProvider implements ControllerProviderInterface
 		 */
 		$controllers->get('/new', function(Application $app) {
 
+			if (!sizeof($app['data']['switches']))
+			{
+				$app['session']->set('flash', array(
+					'type'  => 'danger',
+					'short' => $app['i18n']['text']['error'],
+					'ext'   => $app['i18n']['errors']['no_switch'],
+				));
+
+				return $app->redirect($app['url_generator']->generate('switches'));
+			}
+
+			if (isset($app['data']['options']['location']['lat']))
+				$locationIsSet = true;
+			else
+				$locationIsSet = false;
+
 			$location = $app['data']['options']['location'];
 
-			$sunrise = date_sunrise(time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
-			$sunset  = date_sunset (time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+			if ($locationIsSet)
+			{
+				$sunrise = date_sunrise(time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+				$sunset  = date_sunset (time(), SUNFUNCS_RET_TIMESTAMP , $location['lat'], $location['lng'], 96);
+			}
+			else
+			{
+				$sunrise = date('U', mktime (0, 0, 0));
+				$sunset  = date('U', mktime (0, 0, 0));
+			}
 
-			return $app['twig']->render('cronjobs/cronjob_edit.html', array('id' => 0, 'sunrise' => $sunrise, 'sunset' => $sunset));
+			return $app['twig']->render('cronjobs/cronjob_edit.html', array('id' => 0, 'sunrise' => $sunrise, 'sunset' => $sunset, 'locationIsSet' => $locationIsSet));
 		})->bind('cron-new');
 
 
@@ -109,8 +133,18 @@ class CronjobControllerProvider implements ControllerProviderInterface
 			$aCronjob['offset']   = (int)$request->get('offset');
 			$aCronjob['switches'] = $aToSwitch;
 
+			// check for errors
+			if (!isset($app['data']['options']['location']['lat']) && $aCronjob['type'] > 0)
+			{
+				$error = true;
 
-			if (strlen($aCronjob['name']) < 3)
+				$app['session']->set('flash', array(
+					'type'  => 'danger',
+					'short' => $app['i18n']['text']['error'],
+					'ext'   => $app['i18n']['text']['location_not_set'],
+				));
+			}
+			elseif (strlen($aCronjob['name']) < 3)
 			{
 				$error = true;
 

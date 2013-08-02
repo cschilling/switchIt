@@ -41,7 +41,12 @@ class SwitchControllerProvider implements ControllerProviderInterface
 			return $app['twig']->render('switches/switch_edit.html', array('id' => $id));
 		})->bind('switch-edit');
 
-		$controllers->get('/new', function(Application $app) {
+
+	    /**
+	     * add a switch
+	     *
+	     */
+	    $controllers->get('/new', function(Application $app) {
 			if (sizeof($app['data']['groups']))
 				return $app['twig']->render('switches/switch_edit.html', array('id' => 0));
 			else
@@ -49,7 +54,7 @@ class SwitchControllerProvider implements ControllerProviderInterface
 				$app['session']->set('flash', array(
 					'type'  => 'danger',
 					'short' => $app['i18n']['text']['error'],
-					'ext'   => $app['i18n']['errors']['no_groups'],
+					'ext'   => $app['i18n']['errors']['no_group'],
 				));
 
 				return $app->redirect($app['url_generator']->generate('groups'));
@@ -63,9 +68,16 @@ class SwitchControllerProvider implements ControllerProviderInterface
 	     */
 	    $controllers->get('/delete/{id}', function(Application $app, $id) {
 
-			// delete switch
 			$aData = $app['data'];
 
+		    // delete the switch from cronjobs
+		    foreach($aData['cronjobs'] AS $key => $cron)
+		    {
+			    if (isset($cron['switches'][$id]))
+				    unset($aData['cronjobs'][$key]['switches'][$id]);
+		    }
+
+		    // delete switch
 			unset($aData['switches'][$id]);
 
 			$data = new Data($app['dataFile']);
@@ -88,7 +100,7 @@ class SwitchControllerProvider implements ControllerProviderInterface
 			$switch           = array();
 			$switch['name']   = $request->get('name');
 			$switch['group']  = $request->get('group');
-			$switch['number'] = str_pad($request->get('number'), 2, '0', STR_PAD_LEFT);
+			$switch['number'] = $request->get('number');
 			$switch['config'] = '';
 
 			if (strlen($switch['name']) < 3)
