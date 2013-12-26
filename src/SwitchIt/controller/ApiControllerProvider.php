@@ -15,8 +15,16 @@ class ApiControllerProvider implements ControllerProviderInterface
 
 
 		/**
-		 * homepage
-		 * (redirect to switch-control)
+		 * switch via api
+		 *
+		 * // example
+		 * http://192.168.1.205/api/switch?aSwitch[]=00011_3_1
+
+		 * where:
+		 *   00011 => switch-config
+		 *       3 => switch-number
+		 *     1/0 => on/off
+		 *
 		 *
 		 */
 		$controllers->get('/switch', function (Application $app, Request $request)
@@ -41,17 +49,5 @@ class ApiControllerProvider implements ControllerProviderInterface
 				return new Response('Could not open "'.$app['switchFile'].'" for writing', 500);
 
 		})->bind('api-switch');
-
-
-		/**
-		 * about-page
-		 *
-		 */
-		$controllers->get('/about', function (Application $app)
-		{
-			return $app['twig']->render('static/about.html', array());
-		})->bind('about');
-
-		return $controllers;
 	}
 }
