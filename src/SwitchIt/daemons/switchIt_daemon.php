@@ -30,12 +30,12 @@ while(true)
                 $switchId = substr($switch, 0, -2);
 
                 if (isset($aSwitchStates[$switchId]))
-                    $state = $aSwitchStates[$switchId];
+                    $state = (int)$aSwitchStates[$switchId];
                 else
                     $state = 0;     // assume the switch is off by default
 
                 // flip current state
-                $state  = $state * -1;
+                $state  = ($state)? 0:1;
                 $switch = $switchId.' '.$state;
             }
 
