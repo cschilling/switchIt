@@ -23,7 +23,7 @@ class ApiControllerProvider implements ControllerProviderInterface
 		 * where:
 		 *   00011 => switch-config
 		 *       3 => switch-number
-		 *     1/0 => on/off
+		 *     1/0/2 => on/off/flip
 		 *
 		 *
 		 */
@@ -49,5 +49,7 @@ class ApiControllerProvider implements ControllerProviderInterface
 				return new Response('Could not open "'.$app['switchFile'].'" for writing', 500);
 
 		})->bind('api-switch');
+
+        return $controllers;
 	}
 }
