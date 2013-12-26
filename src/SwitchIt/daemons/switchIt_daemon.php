@@ -27,8 +27,6 @@ while(true)
             // check if a switch should be flipped
             if (substr($switch, -1) == '2')
             {
-                $switchId = substr($switch, 0, -2);
-
                 if (isset($aSwitchStates[$switchId]))
                     $state = $aSwitchStates[$switchId];
                 else
@@ -36,13 +34,13 @@ while(true)
 
                 // flip current state
                 $state  = $state * -1;
-                $switch = $switchId.' '.$state;
-
-                // set new switch-state
-                $aSwitchStates[$switchId] = $state;
+                $switch = substr($switch, 0, -2).' '.$state;
             }
 
+            // set new switch-state
             shell_exec($sendBin.' '.$switch);
+
+            $aSwitchStates[substr($switch, 0, -2)] = substr($switch, -1);
 
 			usleep(500000);
 		}

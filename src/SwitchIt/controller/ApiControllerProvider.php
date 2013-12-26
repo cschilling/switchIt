@@ -37,7 +37,7 @@ class ApiControllerProvider implements ControllerProviderInterface
 				$aSwitchConfig = explode('_', $switchConfig);
 
 				// check for right format
-				if (!isset($aSwitchConfig[2]) || ((int)$aSwitchConfig[2] <> 0 && (int)$aSwitchConfig[2] <> 1))
+				if (!isset($aSwitchConfig[2]) || ((int)$aSwitchConfig[2] <> 0 && (int)$aSwitchConfig[2] <> 1 && (int)$aSwitchConfig[2] <> 2))
 					return new Response('Bad Request: Key #'.$key.' ("'.$switchConfig.'") malformated', 300);
 
 				$aToSwitch[] = $aSwitchConfig[0].' '.(int)$aSwitchConfig[1].' '.(int)$aSwitchConfig[2];
