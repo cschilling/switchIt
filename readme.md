@@ -28,3 +28,8 @@ switchIt is a webGui that uses the *raspberry-remote*-project to switch radio-co
 #### Troubeshooting ####
 If the webpage shows an *404* error, make sure that the `.htaccess`-file of switchIt is used by the webserver.
 Open up the file `/etc/apache2/sites-available/default` and check that under the section `<Directory /var/www/>` `AllowOverride` is set to `All`
+Also check, that mod_rewrite is enabled! (If the file `/etc/apache2/mods-enabled/rewrite.load` exists)
+If not do a:
+`ln -s ../mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load`
+and restart apache2 by
+`/etc/init.d/apache2 restart`
